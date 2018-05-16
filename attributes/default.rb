@@ -1,0 +1,9 @@
+default['java']['install_flavor'] = 'oracle'
+default['java']['jdk_version'] = '8'
+default['java']['oracle']['accept_oracle_download_terms'] = true
+node.override['java']['oracle']['accept_oracle_download_terms'] = true
+node.override['java']['oracle']['jce']['enabled'] = true
+default['elasticsearch']['user'] = 'elasticsearch'
+default['elasticsearch']['port'] = 9200
+default['elasticsearch']['auto_create_index'] = true
+default['elasticsearch']['data_directory'] = '/var/lib/elasticsearch'
