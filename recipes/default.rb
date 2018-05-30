@@ -1,6 +1,6 @@
 Chef::Resource.send(:include, HostProperties)
 
-include_recipe 'base_cookbook::default'
+include_recipe 'foundation::default'
 include_recipe 'java'
 
 data_dir = node['elasticsearch']['data_directory']

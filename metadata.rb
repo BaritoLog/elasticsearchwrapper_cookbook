@@ -12,4 +12,4 @@ source_url 'https://github.com/BaritoLog/elasticsearch_wrapper_cookbook'
 
 depends 'java'
 depends 'elasticsearch'
-depends 'base_cookbook'
+depends 'foundation'
