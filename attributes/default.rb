@@ -8,3 +8,7 @@ default['elasticsearch']['port'] = 9200
 default['elasticsearch']['auto_create_index'] = true
 default['elasticsearch']['data_directory'] = '/var/lib/elasticsearch'
 default['elasticsearch']['bulk_queue_size'] = 1000
+
+# Attributes for registering this service to consul
+default[cookbook_name]['consul']['config_dir'] = '/opt/consul/etc'
+default[cookbook_name]['consul']['bin'] = '/opt/bin/consul'
