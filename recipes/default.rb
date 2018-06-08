@@ -1,6 +1,5 @@
 Chef::Resource.send(:include, HostProperties)
 
-include_recipe 'foundation::default'
 include_recipe 'java'
 
 data_dir = node['elasticsearch']['data_directory']
@@ -61,12 +60,13 @@ elasticsearch_configure 'elasticsearch' do
   action :manage
 end
 
-limits_config 'elasticsearch' do
-  limits [
-    { domain: 'elasticsearch', type: 'hard', value: 'unlimited', item: 'memlock' },
-    { domain: 'elasticsearch', type: 'soft', value: 'unlimited', item: 'memlock' }
-  ]
-end
+# TODO: this is not working, should be refactored
+# limits_config 'elasticsearch' do
+#   limits [
+#     { domain: 'elasticsearch', type: 'hard', value: 'unlimited', item: 'memlock' },
+#     { domain: 'elasticsearch', type: 'soft', value: 'unlimited', item: 'memlock' }
+#   ]
+# end
 
 sysctl 'vm.max_map_count' do
   key 'vm.max_map_count'
