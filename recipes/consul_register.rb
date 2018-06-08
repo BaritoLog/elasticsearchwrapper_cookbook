@@ -19,6 +19,6 @@ config = {
 
 consul_register_service "elasticsearch" do
   config config
-  config_dir  node[cookbook_name]['consul']['config_dir']
-  consul_bin  node[cookbook_name]['consul']['bin']
+  config_dir  node['elasticsearch']['consul']['config_dir']
+  consul_bin  node['elasticsearch']['consul']['bin']
 end
