@@ -27,7 +27,7 @@ directory data_dir do
 end
 
 elasticsearch_configure 'elasticsearch' do
-  allocated_memory allocated_memory
+  allocated_memory (node['elasticsearch']['allocated_memory'] || allocated_memory)
   jvm_options %w[
     -Xss1m
     -XX:+UseConcMarkSweepGC
