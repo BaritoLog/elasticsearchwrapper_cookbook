@@ -26,8 +26,14 @@ directory data_dir do
   action :create
 end
 
+if node['elasticsearch']['allocated_memory']
+  elasticsearch_memory = "#{node['elasticsearch']['allocated_memory']/1024}m"
+else
+  elasticsearch_memory = allocated_memory
+end
+
 elasticsearch_configure 'elasticsearch' do
-  allocated_memory (node['elasticsearch']['allocated_memory'] || allocated_memory)
+  allocated_memory elasticsearch_memory
   jvm_options %w[
     -Xss1m
     -XX:+UseConcMarkSweepGC
