@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe 'elasticsearch_wrapper_cookbook::default' do
   let(:chef_run) do
-    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04') do |node|
+    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '18.04') do |node|
       node.normal['elasticsearch']['version'] = '99.99'
       node.normal['elasticsearch']['user'] = 'elasticsearch'
       node.normal['elasticsearch']['data_directory'] = '/var/lib/elasticsearch'
@@ -11,10 +11,6 @@ describe 'elasticsearch_wrapper_cookbook::default' do
       node.normal['elasticsearch']['auto_create_index'] = true
       allow(node).to receive(:hostname).and_return('hostname')
     end.converge(described_recipe)
-  end
-
-  it 'should include java recipe' do
-    expect(chef_run).to include_recipe('java')
   end
 
   it 'should create elasticsearch user' do
