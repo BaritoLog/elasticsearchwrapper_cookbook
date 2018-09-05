@@ -60,7 +60,7 @@ describe 'elasticsearch_wrapper_cookbook::default' do
         'node.name' => 'hostname',
         'http.port' => '9200',
         'network.host' => 'hostname',
-        'bootstrap.memory_lock' => true,
+        'bootstrap.memory_lock' => false,
         'thread_pool.bulk.size' => 1,
         'thread_pool.bulk.queue_size' => '10',
         'action.auto_create_index' => true

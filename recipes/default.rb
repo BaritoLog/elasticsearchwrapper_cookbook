@@ -77,7 +77,7 @@ elasticsearch_configure 'elasticsearch' do
     'node.name' => hostname,
     'http.port' => port,
     'network.host' => hostname,
-    'bootstrap.memory_lock' => true,
+    'bootstrap.memory_lock' => false,
     'thread_pool.bulk.size' => bulk_size_conf,
     'thread_pool.bulk.queue_size' => bulk_queue_size,
     'action.auto_create_index' => auto_create_index
