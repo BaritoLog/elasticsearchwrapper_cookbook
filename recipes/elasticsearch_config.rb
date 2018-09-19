@@ -44,12 +44,17 @@ config = {
   'thread_pool.bulk.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
 }
+
 if node_master
   config['node.master'] = node_master
   config['discovery.zen.ping.unicast.hosts'] = member_hosts
+  config['network.host'] = node.ipaddress
+elsif node_member
+  config['node.data'] = node_member
+  config['network.host'] = node.ipaddress
+else
+  config['network.host'] = hostname
 end
-
-config['node.data'] = node_member if node_member
 
 elasticsearch_configure 'elasticsearch' do
   allocated_memory elasticsearch_memory
