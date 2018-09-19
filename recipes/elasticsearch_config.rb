@@ -10,16 +10,17 @@
 
 Chef::Recipe.send(:include, HostProperties)
 hostname = node.hostname
-port = node[cookbook_name]['port']
-bulk_queue_size = node[cookbook_name]['bulk_queue_size']
-auto_create_index = node[cookbook_name]['auto_create_index']
-data_dir = node[cookbook_name]['data_directory']
-node_master = node[cookbook_name]['node_master']
-node_member = node[cookbook_name]['node_member']
-jvm_options = node[cookbook_name]['jvm_options'].map do |key, opt|
+port = node['elasticsearch']['port']
+bulk_queue_size = node['elasticsearch']['bulk_queue_size']
+auto_create_index = node['elasticsearch']['auto_create_index']
+data_dir = node['elasticsearch']['data_directory']
+node_master = node['elasticsearch']['node_master']
+node_member = node['elasticsearch']['node_member']
+cluster_name = node['elasticsearch']['cluster_name']
+jvm_options = node['elasticsearch']['jvm_options'].map do |key, opt|
   "#{key}#{"=#{opt}" unless opt.to_s.empty?}" unless opt == 'nil'
 end
-member_hosts = node[cookbook_name]['member_hosts']
+member_hosts = node['elasticsearch']['member_hosts']
 
 directory data_dir do
   owner user
@@ -27,22 +28,16 @@ directory data_dir do
   action :create
 end
 
-if node[cookbook_name]['allocated_memory']
-  elasticsearch_memory = "#{node[cookbook_name]['allocated_memory']/1024}m"
+if node['elasticsearch']['allocated_memory']
+  elasticsearch_memory = "#{node['elasticsearch']['allocated_memory']/1024}m"
 else
   elasticsearch_memory = allocated_memory
 end
 
 bulk_size_conf = bulk_size
-p "@@@@@@@@@"
-p node_master
-p "@@@@@@@@@"
-
 config = {
   'path.data' => data_dir,
   'node.name' => hostname,
-  'node.master' => node_master,
-  'node.data' => node_member,
   'http.port' => port,
   'network.host' => hostname,
   'bootstrap.memory_lock' => false,
@@ -50,7 +45,19 @@ config = {
   'thread_pool.bulk.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
 }
-config['discovery.zen.ping.unicast.hosts'] = member_hosts if node_master
+
+if node_master
+  config['cluster.name'] = cluster_name
+  config['node.master'] = node_master
+  config['discovery.zen.ping.unicast.hosts'] = member_hosts
+  config['network.host'] = node.ipaddress
+elsif node_member
+  config['cluster.name'] = cluster_name
+  config['node.data'] = node_member
+  config['network.host'] = node.ipaddress
+else
+  config['network.host'] = hostname
+end
 
 elasticsearch_configure 'elasticsearch' do
   allocated_memory elasticsearch_memory

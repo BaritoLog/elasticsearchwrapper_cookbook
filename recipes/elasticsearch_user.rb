@@ -6,7 +6,7 @@
 #
 #
 
-user = node[cookbook_name]['user']
+user = node['elasticsearch']['user']
 
 elasticsearch_user user do
   action :create
