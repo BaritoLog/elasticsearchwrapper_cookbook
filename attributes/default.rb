@@ -19,6 +19,9 @@ default[cookbook_name]['bulk_queue_size'] = 1000
 default[cookbook_name]['allocated_memory'] = nil
 default[cookbook_name]['max_allocated_memory'] = 30500000
 default[cookbook_name]['heap_mem_percent'] = 50
+default[cookbook_name]['node_master'] = false
+default[cookbook_name]['node_member'] = true
+default[cookbook_name]['member_hosts'] = []
 
 # Java package to install by platform
 default[cookbook_name]['java'] = {
@@ -43,7 +46,7 @@ default[cookbook_name]['jvm_options'] = {
   '-server' => '',
   '-Djava.awt.headless' => true,
   '-Dfile.encoding' => 'UTF-8',
-  '-Djna.nosys' => true, 
+  '-Djna.nosys' => true,
   '-Dio.netty.noUnsafe' => true,
   '-Dio.netty.noKeySetOptimization' => true,
   '-Dlog4j.shutdownHookEnabled' => false,
