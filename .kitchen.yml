@@ -26,6 +26,24 @@ platforms:
       product_version: latest
 
 suites:
+  - name: member
+    driver:
+      vm_hostname: member.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.12"}]
+      customize:
+        memory: 2048
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch:
+        hosts: ['member-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 2048000
   - name: master01
     driver:
       vm_hostname: master01.elasticsearch.test
@@ -35,12 +53,12 @@ suites:
         memory: 2048
         cpus: 2
     run_list:
-      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+      - recipe[elasticsearch::elasticsearch]
     verifier:
       inspec_tests:
         - test/unit/spec
     attributes:
-      elasticsearch_wrapper_cookbook:
+      elasticsearch:
         node_master: true
         hosts: ['master01-opscode-ubuntu-1804-chef-14']
         package_retries: 1
@@ -55,32 +73,14 @@ suites:
         memory: 2048
         cpus: 2
     run_list:
-      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+      - recipe[elasticsearch::elasticsearch]
     verifier:
       inspec_tests:
         - test/unit/spec
     attributes:
-      elasticsearch_wrapper_cookbook:
+      elasticsearch:
         node_master: true
         hosts: ['master02-opscode-ubuntu-1804-chef-14']
         package_retries: 1
         allocated_memory: 2048000
         member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]
-  - name: member
-    driver:
-      vm_hostname: member.elasticsearch.test
-      network:
-      - ["private_network", {ip: "192.168.20.12"}]
-      customize:
-        memory: 2048
-        cpus: 2
-    run_list:
-      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
-    verifier:
-      inspec_tests:
-        - test/unit/spec
-    attributes:
-      elasticsearch_wrapper_cookbook:
-        hosts: ['member-opscode-ubuntu-1804-chef-14']
-        package_retries: 1
-        allocated_memory: 2048000

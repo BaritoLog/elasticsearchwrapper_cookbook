@@ -6,9 +6,9 @@
 #
 #
 
-package_retries = node[cookbook_name]['package_retries']
-version = node[cookbook_name]['version']
-java = node[cookbook_name]['java']
+package_retries = node['elasticsearch']['package_retries']
+version = node['elasticsearch']['version']
+java = node['elasticsearch']['java']
 
 # Update apt packages
 apt_update 'update'
