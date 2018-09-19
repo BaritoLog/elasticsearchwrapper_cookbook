@@ -12,6 +12,7 @@ cookbook_name = 'elasticsearch_wrapper_cookbook'
 default[cookbook_name]['user'] = 'elasticsearch'
 
 # Elasticsearch configuration
+default[cookbook_name]['version'] = '6.4.1'
 default[cookbook_name]['port'] = 9200
 default[cookbook_name]['auto_create_index'] = true
 default[cookbook_name]['data_directory'] = '/var/lib/elasticsearch'

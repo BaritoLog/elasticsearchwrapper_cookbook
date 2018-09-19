@@ -34,15 +34,9 @@ else
 end
 
 bulk_size_conf = bulk_size
-p "@@@@@@@@@"
-p node_master
-p "@@@@@@@@@"
-
 config = {
   'path.data' => data_dir,
   'node.name' => hostname,
-  'node.master' => node_master,
-  'node.data' => node_member,
   'http.port' => port,
   'network.host' => hostname,
   'bootstrap.memory_lock' => false,
@@ -50,7 +44,12 @@ config = {
   'thread_pool.bulk.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
 }
-config['discovery.zen.ping.unicast.hosts'] = member_hosts if node_master
+if node_master
+  config['node.master'] = node_master
+  config['discovery.zen.ping.unicast.hosts'] = member_hosts
+end
+
+config['node.data'] = node_member if node_member
 
 elasticsearch_configure 'elasticsearch' do
   allocated_memory elasticsearch_memory

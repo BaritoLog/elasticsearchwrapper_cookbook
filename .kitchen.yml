@@ -26,9 +26,9 @@ platforms:
       product_version: latest
 
 suites:
-  - name: master
+  - name: master01
     driver:
-      vm_hostname: master.elasticsearch.test
+      vm_hostname: master01.elasticsearch.test
       network:
       - ["private_network", {ip: "192.168.20.10"}]
       customize:
@@ -42,10 +42,10 @@ suites:
     attributes:
       elasticsearch_wrapper_cookbook:
         node_master: true
-        hosts: ['master-opscode-ubuntu-1804-chef-14']
+        hosts: ['master01-opscode-ubuntu-1804-chef-14']
         package_retries: 1
         allocated_memory: 2048000
-        member_hosts: ["102.168.20.10", "192.168.20.11", "192.168.20.12"]
+        member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]
   - name: master02
     driver:
       vm_hostname: master02.elasticsearch.test
