@@ -2,6 +2,9 @@
 driver:
   name: vagrant
   product_version: 14.1.1
+  customize:
+    memory: 6144
+    cpus: 2
 
 provisioner:
   name: chef_zero
@@ -23,9 +26,61 @@ platforms:
       product_version: latest
 
 suites:
-  - name: default
+  - name: master
+    driver:
+      vm_hostname: master.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.10"}]
+      customize:
+        memory: 2048
+        cpus: 2
     run_list:
-      - recipe[elasticsearch_wrapper_cookbook::default]
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
     verifier:
       inspec_tests:
         - test/unit/spec
+    attributes:
+      elasticsearch_wrapper_cookbook:
+        node_master: true
+        hosts: ['master-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 2048000
+        member_hosts: ["102.168.20.10", "192.168.20.11", "192.168.20.12"]
+  - name: master02
+    driver:
+      vm_hostname: master02.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.11"}]
+      customize:
+        memory: 2048
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch_wrapper_cookbook:
+        node_master: true
+        hosts: ['master02-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 2048000
+        member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]
+  - name: member
+    driver:
+      vm_hostname: member.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.12"}]
+      customize:
+        memory: 2048
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch_wrapper_cookbook:
+        hosts: ['member-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 2048000
