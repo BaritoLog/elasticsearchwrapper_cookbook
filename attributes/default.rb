@@ -38,7 +38,6 @@ default['elasticsearch']['package_retries'] = nil
 # {key => value} which gives "key=value" or just "key" if value is nil
 default['elasticsearch']['jvm_options'] = {
   '-Xss1m' => '',
-  '-XX:+UseConcMarkSweepGC' => '',
   '-XX:CMSInitiatingOccupancyFraction' => 75,
   '-XX:+UseCMSInitiatingOccupancyOnly' => '',
   '-XX:+DisableExplicitGC' => '',
