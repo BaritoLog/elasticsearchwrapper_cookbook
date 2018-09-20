@@ -56,5 +56,5 @@ default['elasticsearch']['jvm_options'] = {
 
   # Avoid crash when using AVX-512
   # https://github.com/elastic/elasticsearch/issues/31425
-  '-XX:UseAVX=2'
+  '-XX:UseAVX' => 2
 }
