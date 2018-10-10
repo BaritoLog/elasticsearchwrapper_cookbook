@@ -23,6 +23,10 @@ default['elasticsearch']['node_member'] = true
 default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = []
 
+# Prevent unassigned shard replication in single node mode
+# Override this if you have two or more elasticsearch node
+default['elasticsearch']['index_number_of_replicas'] = 0
+
 # Java package to install by platform
 default['elasticsearch']['java'] = {
   'centos' => 'java-1.8.0-openjdk-headless',
