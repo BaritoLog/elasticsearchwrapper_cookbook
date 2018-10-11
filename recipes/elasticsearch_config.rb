@@ -6,8 +6,6 @@
 #
 #
 
-
-
 Chef::Recipe.send(:include, HostProperties)
 hostname = node.hostname
 port = node['elasticsearch']['port']

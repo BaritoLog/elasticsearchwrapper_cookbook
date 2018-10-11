@@ -23,6 +23,10 @@ default['elasticsearch']['node_member'] = true
 default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = []
 
+# Explicitly set number of replicas, override this as necessary
+# Also you need to explicitly include `elasticsearch_set_replica` recipe
+default['elasticsearch']['index_number_of_replicas'] = 3
+
 # Java package to install by platform
 default['elasticsearch']['java'] = {
   'centos' => 'java-1.8.0-openjdk-headless',
