@@ -23,9 +23,9 @@ default['elasticsearch']['node_member'] = true
 default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = []
 
-# Prevent unassigned shard replication in single node mode
-# Override this if you have two or more elasticsearch node
-default['elasticsearch']['index_number_of_replicas'] = 0
+# Explicitly set number of replicas, override this as necessary
+# Also you need to explicitly include `elasticsearch_set_replica` recipe
+default['elasticsearch']['index_number_of_replicas'] = 3
 
 # Java package to install by platform
 default['elasticsearch']['java'] = {
