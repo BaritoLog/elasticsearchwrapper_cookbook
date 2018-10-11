@@ -1,12 +1,13 @@
 #
 # Cookbook:: elasticsearchwrapper
-# Recipe:: elasticsearch_config
+# Recipe:: elasticsearch_set_replica
 #
 # Copyright:: 2018, BaritoLog.
 #
 #
 
 number_of_replicas = node['elasticsearch']['index_number_of_replicas']
+port = node['elasticsearch']['port']
 
 # Since ES >= 5, index configuration cannot using yaml file, using dynamic config API instead
 
