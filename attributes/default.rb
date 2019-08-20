@@ -10,7 +10,7 @@
 default['elasticsearch']['user'] = 'elasticsearch'
 
 # Elasticsearch configuration
-default['elasticsearch']['version'] = '6.4.1'
+default['elasticsearch']['version'] = '7.3.0'
 default['elasticsearch']['port'] = 9200
 default['elasticsearch']['auto_create_index'] = true
 default['elasticsearch']['data_directory'] = '/var/lib/elasticsearch'
@@ -19,9 +19,10 @@ default['elasticsearch']['allocated_memory'] = nil
 default['elasticsearch']['max_allocated_memory'] = 30500000
 default['elasticsearch']['heap_mem_percent'] = 50
 default['elasticsearch']['node_master'] = false
-default['elasticsearch']['node_member'] = true
+default['elasticsearch']['node_data'] = true
 default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = []
+default['elasticsearch']['memory_lock'] = true
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
