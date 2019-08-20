@@ -13,12 +13,14 @@ bulk_queue_size = node['elasticsearch']['bulk_queue_size']
 auto_create_index = node['elasticsearch']['auto_create_index']
 data_dir = node['elasticsearch']['data_directory']
 node_master = node['elasticsearch']['node_master']
-node_member = node['elasticsearch']['node_member']
+node_data = node['elasticsearch']['node_data']
 cluster_name = node['elasticsearch']['cluster_name']
+memory_lock = node['elasticsearch']['memory_lock']
 jvm_options = node['elasticsearch']['jvm_options'].map do |key, opt|
   "#{key}#{"=#{opt}" unless opt.to_s.empty?}" unless opt == 'nil'
 end
 member_hosts = node['elasticsearch']['member_hosts']
+minimum_master_nodes = node['elasticsearch']['minimum_master_nodes']
 
 directory data_dir do
   owner user
@@ -38,7 +40,7 @@ config = {
   'node.name' => hostname,
   'http.port' => port,
   'network.host' => hostname,
-  'bootstrap.memory_lock' => false,
+  'bootstrap.memory_lock' => memory_lock,
   'thread_pool.bulk.size' => bulk_size_conf,
   'thread_pool.bulk.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
@@ -47,12 +49,13 @@ config = {
 if node_master
   config['cluster.name'] = cluster_name
   config['node.master'] = node_master
-  config['discovery.zen.ping.unicast.hosts'] = member_hosts
+  config['discovery.seed_hosts'] = member_hosts
   config['network.host'] = node.ipaddress
-elsif node_member
+elsif node_data
   config['cluster.name'] = cluster_name
-  config['node.data'] = node_member
+  config['node.data'] = node_data
   config['network.host'] = node.ipaddress
+  config['node.master'] = node_master
 else
   config['network.host'] = hostname
 end

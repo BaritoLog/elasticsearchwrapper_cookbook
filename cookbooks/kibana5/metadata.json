@@ -1,0 +1,56 @@
+{
+  "name": "kibana5",
+  "description": "Installs/Configures kibana 5",
+  "long_description": "# chef-kibana5\n[![Cookbook Version](https://img.shields.io/cookbook/v/kibana5.svg)](https://supermarket.chef.io/cookbooks/kibana5)\n[![Build Status](https://travis-ci.org/anuriq/chef-kibana5.svg?branch=master)](https://travis-ci.org/anuriq/chef-kibana5)\n\n## Description\n\nThis cookbook installs and configures [Kibana](https://www.elastic.co/products/kibana) version 5.2.0 and above. This cookbook may work with Kibana 6.x.x, but no guarantee.\n\n## Requirements\n\n### Cookbooks\n\n- [ark](https://supermarket.chef.io/cookbooks/ark)\n- [systemd](https://supermarket.chef.io/cookbooks/systemd)\n\n### Platforms\n\nTested only on CentOS 7 and Ubuntu 16.04. Should work on any modern Linux OS with systemd.\n\n## Recipes\n* `default.rb` - Runs `kibana5_install` and `kibana5_configure` with default options.\n\n## Resources\n\n### kibana5_install\n\nThis resource installs Kibana 5 binaries.\n\n#### Attributes\n\n|Attribute|Description|Type|Default|\n|---------|-----------|----|-------|\n|`name`| Simply name. Currently not used. |String||\n|`version`| Version of Kibana. 5.2.0 and above are supported. |String|`5.6.16`|\n|`install_method`| Installation method. Currently only `release` is supported. This means installation from official binaries provided by Elastic. |String|`release`|\n|`base_dir`| Base directory for Kibana binaries. |String|`/opt/kibana`|\n|`svc_user`| Kibana daemon user. |String|`kibana`|\n|`svc_group`| Kibana daemon group. |String|`kibana`|\n\n### kibana5_configure\n\nThis resource configures Kibana daemon and main configuration file.\n\n#### Attributes\n\n|Attribute|Description|Type|Default|\n|---------|-----------|----|-------|\n|`svc_name`| Name of the daemon |String||\n|`svc_user`| Kibana daemon user. |String|`kibana`|\n|`svc_group`| Kibana daemon group. |String|`kibana`|\n|`configuration`| Hash with configuration file values. See examples. |Hash||\n|`template_cookbook`| Override template from other cookbook. |String|`kibana5`|\n\nexamples of configuration hashes:\n\n```ruby\n{\n  'server.port' => 5601,\n  'server.host' => 'localhost',\n  'elasticsearch.url' => 'http://localhost:9200',\n}\n```\n\n```ruby\n{\n  'server.port' => 5601,\n  'server.host' => 'localhost',\n  'server.name' => 'My-Kibana',\n  'elasticsearch.url' => 'http://localhost:9200',\n  'logging.dest' => '/var/log/kibana.log',\n  'logging.verbose' => 'true',\n  'elasticsearch.requestHeadersWhitelist' => '[ authorization ]',\n}\n```\n\n## Usage\n\nIt is recommended to use resources directly.\n\n## Examples\nYou may see examples in fixture cookbook:\n[test/fixtures/kibana5-test/recipes/default.rb](test/fixtures/kibana5-test/recipes/default.rb)\n[test/fixtures/kibana5-test/recipes/nginx.rb](test/fixtures/kibana5-test/recipes/nginx.rb)\n\n## Authors\n- Author:: Azat Khadiev (anuriq@gmail.com)\n",
+  "maintainer": "Azat Khadiev",
+  "maintainer_email": "anuriq@gmail.com",
+  "license": "Apache-2.0",
+  "platforms": {
+    "centos": ">= 7.0",
+    "redhat": ">= 7.0",
+    "ubuntu": ">= 16.04"
+  },
+  "dependencies": {
+    "ark": ">= 0.0.0",
+    "systemd": ">= 0.0.0"
+  },
+  "recommendations": {
+
+  },
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "providing": {
+
+  },
+  "replacing": {
+
+  },
+  "attributes": {
+
+  },
+  "groupings": {
+
+  },
+  "recipes": {
+
+  },
+  "version": "1.6.7",
+  "source_url": "https://github.com/anuriq/chef-kibana5",
+  "issues_url": "https://github.com/anuriq/chef-kibana5/issues",
+  "privacy": false,
+  "chef_versions": [
+    [
+      ">= 12.1"
+    ]
+  ],
+  "ohai_versions": [
+
+  ],
+  "gems": [
+
+  ]
+}

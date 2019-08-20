@@ -1,0 +1,36 @@
+{
+  "name": "kibana_wrapper_cookbook",
+  "description": "Installs/Configures Kibana",
+  "long_description": "Installs/Configures Kibana",
+  "maintainer": "GOJEK Engineering",
+  "maintainer_email": "baritolog@go-jek.com",
+  "license": "Apache-2.0",
+  "platforms": {
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+    "systemd": ">= 0.0.0",
+    "kibana5": ">= 0.0.0"
+  },
+  "providing": {
+
+  },
+  "recipes": {
+
+  },
+  "version": "6.3.1",
+  "source_url": "https://github.com/BaritoLog/kibana_wrapper_cookbook",
+  "issues_url": "https://github.com/BaritoLog/kibana_wrapper_cookbook/issues",
+  "privacy": false,
+  "chef_versions": [
+    [
+      ">= 14.1.1"
+    ]
+  ],
+  "ohai_versions": [
+
+  ],
+  "gems": [
+
+  ]
+}

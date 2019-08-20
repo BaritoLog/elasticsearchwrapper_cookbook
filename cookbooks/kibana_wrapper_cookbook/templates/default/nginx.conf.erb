@@ -1,0 +1,17 @@
+server {
+  listen       <%= @listen_port %>;
+  server_name  <%= @server_name %>;
+
+
+  client_max_body_size 50M;
+
+  error_log   /var/log/nginx/<%= @server_name %>-errors.log;
+  access_log  /var/log/nginx/<%= @server_name %>.log;
+
+  location ~ ^<%= @base_path %>/?(.*)$ {
+    rewrite ^<%= @base_path %>/?(.*)$ /$1 break;
+    root /opt/kibana/current;
+    index index.html index.htm;
+    proxy_pass http://127.0.0.1:<%= @kibana_port %>;
+  }
+}
