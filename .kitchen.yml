@@ -13,6 +13,7 @@ provisioner:
   data_bags_path: 'test/fixtures/data_bags'
   client_rb:
     environment: _default
+    chef_license: accept
 
 verifier:
   name: inspec
@@ -32,10 +33,11 @@ suites:
       network:
       - ["private_network", {ip: "192.168.20.12"}]
       customize:
-        memory: 2048
+        memory: 4096
         cpus: 2
     run_list:
       - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+      - recipe[kibana_wrapper_cookbook::default]
     verifier:
       inspec_tests:
         - test/unit/spec
@@ -43,14 +45,14 @@ suites:
       elasticsearch:
         hosts: ['member-opscode-ubuntu-1804-chef-14']
         package_retries: 1
-        allocated_memory: 2048000
+        allocated_memory: 4096000
   - name: master01
     driver:
       vm_hostname: master01.elasticsearch.test
       network:
       - ["private_network", {ip: "192.168.20.10"}]
       customize:
-        memory: 2048
+        memory: 4096
         cpus: 2
     run_list:
       - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
@@ -62,7 +64,7 @@ suites:
         node_master: true
         hosts: ['master01-opscode-ubuntu-1804-chef-14']
         package_retries: 1
-        allocated_memory: 2048000
+        allocated_memory: 4096000
         member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]
   - name: master02
     driver:
@@ -70,7 +72,7 @@ suites:
       network:
       - ["private_network", {ip: "192.168.20.11"}]
       customize:
-        memory: 2048
+        memory: 4096
         cpus: 2
     run_list:
       - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
@@ -82,5 +84,5 @@ suites:
         node_master: true
         hosts: ['master02-opscode-ubuntu-1804-chef-14']
         package_retries: 1
-        allocated_memory: 2048000
+        allocated_memory: 4096000
         member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]

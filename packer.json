@@ -22,7 +22,7 @@
       {
         "type": "chef-solo",
         "cookbook_paths": ["{{user `cookbook_paths`}}"],
-        "run_list": ["recipe[elasticsearch_wrapper_cookbook::elasticsearch]"]
+        "run_list": ["recipe[elasticsearch_wrapper_cookbook::elasticsearch]", "recipe[prometheus::elasticsearch_exporter]"]
       }
     ]
   }
