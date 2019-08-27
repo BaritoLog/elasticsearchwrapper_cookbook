@@ -44,12 +44,13 @@ config = {
   'thread_pool.bulk.size' => bulk_size_conf,
   'thread_pool.bulk.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
+  'discovery.zen.minimum_master_nodes' => minimum_master_nodes,
 }
 
 if node_master
   config['cluster.name'] = cluster_name
   config['node.master'] = node_master
-  config['discovery.seed_hosts'] = member_hosts
+  config['discovery.zen.ping.unicast.hosts'] = member_hosts
   config['network.host'] = node.ipaddress
 elsif node_data
   config['cluster.name'] = cluster_name

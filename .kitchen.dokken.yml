@@ -3,6 +3,7 @@ driver:
   privileged: true # because Docker and SystemD/Upstart
   chef_version: latest
 
+
 transport:
   name: dokken
 
@@ -32,5 +33,4 @@ suites:
     attributes:
       elasticsearch:
         hosts: ['member-opscode-ubuntu-1804-chef-14']
-        package_retries: 1
-        version: "6.3.0"
+        package_retries: 
