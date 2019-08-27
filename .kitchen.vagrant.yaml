@@ -1,0 +1,88 @@
+---
+driver:
+  name: vagrant
+  product_version: 14.1.1
+  customize:
+    memory: 6144
+    cpus: 2
+
+provisioner:
+  name: chef_zero
+  nodes_path: 'test/fixtures/nodes'
+  environments_path: 'test/fixtures/data_bags'
+  data_bags_path: 'test/fixtures/data_bags'
+  client_rb:
+    environment: _default
+    chef_license: accept
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: opscode-ubuntu-18.04-chef-14
+    driver:
+      box: bento/ubuntu-18.04
+    provisioner:
+      product_name: chef
+      product_version: latest
+
+suites:
+  - name: member
+    driver:
+      vm_hostname: member.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.12"}]
+      customize:
+        memory: 4096
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+      - recipe[kibana_wrapper_cookbook::default]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch:
+        hosts: ['member-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 4096000
+  - name: master01
+    driver:
+      vm_hostname: master01.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.10"}]
+      customize:
+        memory: 4096
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch:
+        node_master: true
+        hosts: ['master01-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 4096000
+        member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]
+  - name: master02
+    driver:
+      vm_hostname: master02.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.11"}]
+      customize:
+        memory: 4096
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch:
+        node_master: true
+        hosts: ['master02-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 4096000
+        member_hosts: ["192.168.20.10", "192.168.20.11", "192.168.20.12"]
