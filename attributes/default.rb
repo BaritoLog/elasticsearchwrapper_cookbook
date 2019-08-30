@@ -38,6 +38,10 @@ default['elasticsearch']['java'] = {
 # Attributes for registering this service to consul
 default['elasticsearch']['consul']['config_dir'] = '/opt/consul/etc'
 default['elasticsearch']['consul']['bin'] = '/opt/bin/consul'
+default['consul']['cli_opts'] = {
+  'config-dir' => default['elasticsearch']['consul']['config_dir'],
+  'enable-script-checks' => nil
+}
 default['elasticsearch']['package_retries'] = nil
 
 # JVM configuration
