@@ -26,6 +26,8 @@ suites:
   - name: member
     run_list:
       - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+      - recipe[consul::default]
+      - recipe[elasticsearch_wrapper_cookbook::consul_register]
     verifier:
       inspec_tests:
         - test/unit/spec

@@ -17,8 +17,30 @@ config = {
   }
 }
 
+
+checks = [
+  {
+    "id": "#{node['hostname']}-hc-tcp",
+    "name": "elasticsearch",
+    "tcp": "#{node['ipaddress']}:#{node['elasticsearch']['port']}",
+    "interval": "10s",
+    "timeout": "1s"
+  },
+  {
+    "id": "#{node['hostname']}-hc-payload",
+    "name": "elasticsearch",
+    "http": "http://#{node['ipaddress']}:#{node['elasticsearch']['port']}",
+    "tls_skip_verify": false,
+    "method": "GET",
+    "header": {},
+    "interval": "10s",
+    "timeout": "1s"
+	  }
+]
+
 consul_register_service "elasticsearch" do
   config config
+  checks checks
   config_dir  node['elasticsearch']['consul']['config_dir']
   consul_bin  node['elasticsearch']['consul']['bin']
 end
