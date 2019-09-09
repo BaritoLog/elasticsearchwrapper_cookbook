@@ -20,9 +20,10 @@ default['elasticsearch']['max_allocated_memory'] = 30500000
 default['elasticsearch']['heap_mem_percent'] = 50
 default['elasticsearch']['node_master'] = false
 default['elasticsearch']['node_data'] = true
+default['elasticsearch']['node_ingest'] = false
 default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = ["http://el.baritolog.com"]
-default['elasticsearch']['memory_lock'] = true
+default['elasticsearch']['memory_lock'] = false
 default['elasticsearch']['minimum_master_nodes'] = 1
 
 # Explicitly set number of replicas, override this as necessary
@@ -38,6 +39,10 @@ default['elasticsearch']['java'] = {
 # Attributes for registering this service to consul
 default['elasticsearch']['consul']['config_dir'] = '/opt/consul/etc'
 default['elasticsearch']['consul']['bin'] = '/opt/bin/consul'
+default['consul']['cli_opts'] = {
+  'config-dir' => default['elasticsearch']['consul']['config_dir'],
+  'enable-script-checks' => nil
+}
 default['elasticsearch']['package_retries'] = nil
 
 # JVM configuration
