@@ -23,3 +23,8 @@ default['nginx']['port'] = 80
 # Attributes for registering this service to consul
 default['kibana']['consul']['config_dir'] = '/opt/consul/etc'
 default['kibana']['consul']['bin'] = '/opt/bin/consul'
+default['consul']['cli_opts'] = {
+  'config-dir' => default['kibana']['consul']['config_dir'],
+  'enable-script-checks' => nil,
+  'advertise' => node['ipaddress']
+}
