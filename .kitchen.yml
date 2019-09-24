@@ -33,6 +33,9 @@ suites:
         - test/unit/spec
     attributes:
       elasticsearch:
-        hosts: ['member-opscode-ubuntu-1804-chef-14']
+        hosts: ["member-opscode-ubuntu-1804-chef-14"]
         package_retries: 1
         version: "6.3.0"
+      consul:
+        run_as_server: false
+        hosts: ["127.0.0.1"]

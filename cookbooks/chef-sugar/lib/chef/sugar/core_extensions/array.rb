@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: chef-sugar
-# Recipe:: default
-#
 # Copyright 2013-2015, Seth Vargo <sethvargo@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +14,21 @@
 # limitations under the License.
 #
 
-Chef::Log.warn('chef-sugar::default no longer needs to be included in your runlist. Instead simply depend on the chef-sugar cookbook and the gem will be installed and loaded automatically.')
+require_relative '../constraints'
+
+class Array
+  #
+  # Treat an array of objects as version constraints.
+  #
+  # @see Chef::Sugar::Constraints::Constraint
+  #
+  # @example Using pure Array<String> objects like constraints
+  #   ['> 2.0.0', '< 3.0.0'].satisfied_by?('2.1.0')
+  #
+  # @param [String] version
+  #   the version to check if it is satisfied
+  #
+  def satisfied_by?(version)
+    Chef::Sugar::Constraints::Constraint.new(*dup).satisfied_by?(version)
+  end unless method_defined?(:satisfied_by?)
+end

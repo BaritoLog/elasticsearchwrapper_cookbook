@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: chef-sugar
-# Recipe:: default
-#
 # Copyright 2013-2015, Seth Vargo <sethvargo@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +14,27 @@
 # limitations under the License.
 #
 
-Chef::Log.warn('chef-sugar::default no longer needs to be included in your runlist. Instead simply depend on the chef-sugar cookbook and the gem will be installed and loaded automatically.')
+class Chef
+  module Sugar
+    module Kitchen
+      extend self
+
+      #
+      # Returns true if the current node is provisioned by Test Kitchen.
+      #
+      # @param [Chef::Node] node
+      #   the node to check
+      #
+      # @return [Boolean]
+      #
+      def kitchen?(node)
+        !ENV['TEST_KITCHEN'].nil?
+      end
+    end
+
+    module DSL
+      # @see Chef::Sugar::Kitchen#kitchen?
+      def kitchen?; Chef::Sugar::Kitchen.kitchen?(node); end
+    end
+  end
+end

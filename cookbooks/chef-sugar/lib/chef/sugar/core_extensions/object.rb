@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: chef-sugar
-# Recipe:: default
-#
 # Copyright 2013-2015, Seth Vargo <sethvargo@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +14,14 @@
 # limitations under the License.
 #
 
-Chef::Log.warn('chef-sugar::default no longer needs to be included in your runlist. Instead simply depend on the chef-sugar cookbook and the gem will be installed and loaded automatically.')
+class Object
+  # An object is blank if it's false, empty, or a whitespace string.
+  # This is implemented in rails.
+  #
+  # @example foo.nil? || foo.empty? can be replaced by foo.blank?
+  #
+  # @return [true, false]
+  def blank?
+    respond_to?(:empty?) ? empty? : !self
+  end unless method_defined?(:blank?)
+end

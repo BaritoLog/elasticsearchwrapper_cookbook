@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: chef-sugar
-# Recipe:: default
-#
 # Copyright 2013-2015, Seth Vargo <sethvargo@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +14,28 @@
 # limitations under the License.
 #
 
-Chef::Log.warn('chef-sugar::default no longer needs to be included in your runlist. Instead simply depend on the chef-sugar cookbook and the gem will be installed and loaded automatically.')
+class Chef
+  module Sugar
+    module RunContext
+      extend self
+
+      #
+      # Determine if the current node includes the given recipe name.
+      #
+      # @param [String] recipe_name
+      #
+      def includes_recipe?(node, recipe_name)
+        node.recipe?(recipe_name)
+      end
+      alias_method :include_recipe?, :includes_recipe?
+    end
+
+    module DSL
+      # @see Chef::Sugar::IP#best_ip_for
+      def includes_recipe?(recipe_name)
+        Chef::Sugar::RunContext.includes_recipe?(node, recipe_name)
+      end
+      alias_method :include_recipe?, :includes_recipe?
+    end
+  end
+end

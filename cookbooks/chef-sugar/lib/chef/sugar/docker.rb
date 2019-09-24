@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: chef-sugar
-# Recipe:: default
-#
 # Copyright 2013-2015, Seth Vargo <sethvargo@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,4 +14,27 @@
 # limitations under the License.
 #
 
-Chef::Log.warn('chef-sugar::default no longer needs to be included in your runlist. Instead simply depend on the chef-sugar cookbook and the gem will be installed and loaded automatically.')
+class Chef
+  module Sugar
+    module Docker
+      extend self
+
+      #
+      # Returns true if the current node is a docker container.
+      #
+      # @param [Chef::Node] node
+      #   the node to check
+      #
+      # @return [Boolean]
+      #
+      def docker?(node)
+        File.exist?('/.dockerinit') || File.exist?('/.dockerenv')
+      end
+    end
+
+    module DSL
+      # @see Chef::Sugar::Docker#docker?
+      def docker?; Chef::Sugar::Docker.docker?(node); end
+    end
+  end
+end
