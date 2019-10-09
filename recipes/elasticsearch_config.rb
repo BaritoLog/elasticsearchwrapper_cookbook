@@ -21,6 +21,9 @@ jvm_options = node['elasticsearch']['jvm_options'].map do |key, opt|
 end
 member_hosts = node['elasticsearch']['member_hosts']
 minimum_master_nodes = node['elasticsearch']['minimum_master_nodes']
+routing_allocation_disk_watermark_low_threshold = node['elasticsearch']['routing_allocation_disk_watermark_low_threshold']
+routing_allocation_disk_watermark_high_threshold = node['elasticsearch']['routing_allocation_disk_watermark_high_threshold']
+routing_allocation_disk_watermark_flood_stage_threshold = node['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold']
 
 directory data_dir do
   owner user
@@ -45,6 +48,9 @@ config = {
   'thread_pool.bulk.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
   'discovery.zen.minimum_master_nodes' => minimum_master_nodes,
+  'cluster.routing.allocation.disk.watermark.low' => routing_allocation_disk_watermark_low_threshold,
+  'cluster.routing.allocation.disk.watermark.high' => routing_allocation_disk_watermark_high_threshold,
+  'cluster.routing.allocation.disk.watermark.flood_stage' => routing_allocation_disk_watermark_flood_stage_threshold,
 }
 
 if node_master
