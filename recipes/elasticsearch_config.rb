@@ -8,7 +8,6 @@
 
 Chef::Recipe.send(:include, HostProperties)
 hostname = node.hostname
-version = node['elasticsearch']['version']
 port = node['elasticsearch']['port']
 bulk_queue_size = node['elasticsearch']['bulk_queue_size']
 auto_create_index = node['elasticsearch']['auto_create_index']
@@ -22,6 +21,9 @@ jvm_options = node['elasticsearch']['jvm_options'].map do |key, opt|
 end
 member_hosts = node['elasticsearch']['member_hosts']
 minimum_master_nodes = node['elasticsearch']['minimum_master_nodes']
+routing_allocation_disk_watermark_low_threshold = node['elasticsearch']['routing_allocation_disk_watermark_low_threshold']
+routing_allocation_disk_watermark_high_threshold = node['elasticsearch']['routing_allocation_disk_watermark_high_threshold']
+routing_allocation_disk_watermark_flood_stage_threshold = node['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold']
 node_awareness_value = node['elasticsearch']['node_awareness_value']
 node_awareness_attribute = node['elasticsearch']['node_awareness_attributes']
 
@@ -29,16 +31,6 @@ directory data_dir do
   owner user
   group user
   action :create
-end
-
-if version >= '7.0.0' && version < '8.0.0' do
-  initial_master_nodes = node['elasticsearch']['initial_master_nodes']
-  discovery_seed_hosts = node['elasticsearch']['discovery_seed_hosts']
-  xpack_security_enabled = node['elasticsearch']['xpack_security_enabled']
-  xpack_security_transport_ssl_enabled = node['elasticsearch']['xpack_security_transport_ssl_enabled']
-  xpack_security_transport_ssl_verification_mode = node['elasticsearch']['xpack_security_transport_ssl_verification_mode']
-  xpack_security_transport_ssl_keystore_path = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
-  xpack_security_transport_ssl_truststore_path = node['elasticsearch']['xpack_security_transport_ssl_truststore_path']
 end
 
 if node['elasticsearch']['allocated_memory']
@@ -58,7 +50,13 @@ config = {
   'thread_pool.write.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
   'discovery.zen.minimum_master_nodes' => minimum_master_nodes,
+<<<<<<< HEAD
+  'cluster.routing.allocation.disk.watermark.low' => routing_allocation_disk_watermark_low_threshold,
+  'cluster.routing.allocation.disk.watermark.high' => routing_allocation_disk_watermark_high_threshold,
+  'cluster.routing.allocation.disk.watermark.flood_stage' => routing_allocation_disk_watermark_flood_stage_threshold,
+=======
   "node.attr.#{node_awareness_attribute}" => node_awareness_value,
+>>>>>>> add node attribute to config
 }
 
 if node_master
@@ -74,16 +72,6 @@ elsif node_data
   config['node.master'] = node_master
 else
   config['network.host'] = hostname
-end
-
-if version >= '7.0.0' && version < '8.0.0' do
-  config['cluster.initial_master_nodes'] = initial_master_nodes
-  config['discovery.seed_hosts'] = discovery_seed_hosts
-  config['xpack.security.enabled'] = xpack_security_enabled
-  config['xpack.security.transport.ssl.enabled'] = xpack_security_transport_ssl_enabled
-  config['xpack.security.transport.ssl.verification_mode'] = xpack_security_transport_ssl_verification_mode
-  config['xpack.security.transport.ssl.keystore.path'] = xpack_security_transport_ssl_keystore_path
-  config['xpack.security.transport.ssl.truststore.path'] = xpack_security_transport_ssl_truststore_path
 end
 
 elasticsearch_configure 'elasticsearch' do
