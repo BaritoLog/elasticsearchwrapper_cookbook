@@ -35,3 +35,7 @@ elasticsearch_install 'elasticsearch' do
   version version
   action :install
 end
+
+execute 'apt autoremove' do
+  command 'apt autoremove -y'
+end
