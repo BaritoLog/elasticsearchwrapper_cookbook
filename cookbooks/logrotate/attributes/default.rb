@@ -23,6 +23,7 @@ default['logrotate']['package'] = {
   'name' => 'logrotate',
   'source' => nil,
   'version' => nil,
+  # TODO: remove provider option in next major release
   'provider' => nil,
   'action' => :upgrade,
 }
@@ -49,7 +50,7 @@ default['logrotate']['global'] = {
   '/var/log/btmp' => {
     'missingok' => true,
     'monthly' => true,
-    'create' => '0660 root utmp',
+    'create' => '0600 root utmp',
     'rotate' => 1,
   },
 }

@@ -32,8 +32,8 @@ checks = [
     "tls_skip_verify": false,
     "method": "GET",
     "header": {},
-    "interval": "10s",
-    "timeout": "1s"
+    "interval": "60s",
+    "timeout": "15s"
   },
 ]
 
