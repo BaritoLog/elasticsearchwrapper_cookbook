@@ -22,7 +22,7 @@ default['elasticsearch']['node_master'] = false
 default['elasticsearch']['node_data'] = true
 default['elasticsearch']['node_ingest'] = false
 default['elasticsearch']['cluster_name'] = "elasticsearch"
-default['elasticsearch']['member_hosts'] = ["http://el.baritolog.com"]
+default['elasticsearch']['member_hosts'] = ["http://elasticsearch.service.consul"]
 default['elasticsearch']['memory_lock'] = false
 default['elasticsearch']['minimum_master_nodes'] = 1
 
