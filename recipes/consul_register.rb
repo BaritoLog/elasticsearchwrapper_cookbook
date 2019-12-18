@@ -25,17 +25,17 @@ checks = [
     "tcp": "#{node['ipaddress']}:#{node['elasticsearch']['port']}",
     "interval": "10s",
     "timeout": "1s"
-  },
-  {
-    "id": "#{node['hostname']}-hc-payload",
-    "name": "elasticsearch",
-    "http": "http://#{node['ipaddress']}:#{node['elasticsearch']['port']}",
-    "tls_skip_verify": false,
-    "method": "GET",
-    "header": {},
-    "interval": "60s",
-    "timeout": "15s"
-	  }
+  }
+  # {
+  #   "id": "#{node['hostname']}-hc-payload",
+  #   "name": "elasticsearch",
+  #   "http": "http://#{node['ipaddress']}:#{node['elasticsearch']['port']}",
+  #   "tls_skip_verify": false,
+  #   "method": "GET",
+  #   "header": {},
+  #   "interval": "60s",
+  #   "timeout": "15s"
+	#   }
 ]
 
 consul_register_service "elasticsearch" do

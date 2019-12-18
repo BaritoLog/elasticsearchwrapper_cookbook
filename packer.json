@@ -26,7 +26,12 @@
       "run_list": [
         "recipe[elasticsearch_wrapper_cookbook::elasticsearch]",
         "recipe[prometheus::elasticsearch_exporter]"
-      ]
+      ],
+      "json": {
+        "elasticsearch": {
+          "version": "6.4.3"
+        }
+      }
     }
   ]
 }
