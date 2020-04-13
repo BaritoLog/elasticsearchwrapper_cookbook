@@ -40,6 +40,7 @@ default['elasticsearch']['xpack_security_transport_ssl_verification_mode'] = 'ce
 default['elasticsearch']['xpack_security_transport_ssl_keystore_path'] = 'elastic-certificates.p12'
 default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elastic-certificates.p12'
 
+
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
 default['elasticsearch']['index_number_of_replicas'] = 3
@@ -110,7 +111,10 @@ default['elasticsearch']['base_template_es7'] = {
         }
       },
       "number_of_shards": 3,
+<<<<<<< HEAD
       "number_of_replicas": 1,
+=======
+>>>>>>> add template default value for es6.x and es7.x
       "refresh_interval":"30s",
       "indexing" : {
         "slowlog" : {
@@ -194,7 +198,10 @@ default['elasticsearch']['base_template_es6'] = {
         }
       },
       "number_of_shards": 3,
+<<<<<<< HEAD
       "number_of_replicas": 1,
+=======
+>>>>>>> add template default value for es6.x and es7.x
       "refresh_interval":"30s",
       "indexing" : {
         "slowlog" : {
