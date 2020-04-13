@@ -21,6 +21,8 @@ jvm_options = node['elasticsearch']['jvm_options'].map do |key, opt|
 end
 member_hosts = node['elasticsearch']['member_hosts']
 minimum_master_nodes = node['elasticsearch']['minimum_master_nodes']
+node_awareness_value = node['elasticsearch']['node_awareness_value']
+node_awareness_attribute = node['elasticsearch']['node_awareness_attributes']
 
 directory data_dir do
   owner user
@@ -41,10 +43,11 @@ config = {
   'http.port' => port,
   'network.host' => hostname,
   'bootstrap.memory_lock' => memory_lock,
-  'thread_pool.bulk.size' => bulk_size_conf,
-  'thread_pool.bulk.queue_size' => bulk_queue_size,
+  'thread_pool.write.size' => bulk_size_conf,
+  'thread_pool.write.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
   'discovery.zen.minimum_master_nodes' => minimum_master_nodes,
+  "node.attr.#{node_awareness_attribute}" => node_awareness_value,
 }
 
 if node_master
@@ -52,6 +55,7 @@ if node_master
   config['node.master'] = node_master
   config['discovery.zen.ping.unicast.hosts'] = member_hosts
   config['network.host'] = node.ipaddress
+  config['cluster.routing.allocation.awareness.attributes'] = node_awareness_attribute
 elsif node_data
   config['cluster.name'] = cluster_name
   config['node.data'] = node_data
