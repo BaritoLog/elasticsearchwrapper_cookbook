@@ -25,6 +25,9 @@ default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = ["http://elasticsearch.service.consul"]
 default['elasticsearch']['memory_lock'] = false
 default['elasticsearch']['minimum_master_nodes'] = 1
+default['elasticsearch']['routing_allocation_disk_watermark_low_threshold'] = "100gb"
+default['elasticsearch']['routing_allocation_disk_watermark_high_threshold'] = "50gb"
+default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold'] = "10gb"
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
