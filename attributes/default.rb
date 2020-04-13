@@ -111,10 +111,7 @@ default['elasticsearch']['base_template_es7'] = {
         }
       },
       "number_of_shards": 3,
-<<<<<<< HEAD
       "number_of_replicas": 1,
-=======
->>>>>>> add template default value for es6.x and es7.x
       "refresh_interval":"30s",
       "indexing" : {
         "slowlog" : {
@@ -198,10 +195,7 @@ default['elasticsearch']['base_template_es6'] = {
         }
       },
       "number_of_shards": 3,
-<<<<<<< HEAD
       "number_of_replicas": 1,
-=======
->>>>>>> add template default value for es6.x and es7.x
       "refresh_interval":"30s",
       "indexing" : {
         "slowlog" : {
