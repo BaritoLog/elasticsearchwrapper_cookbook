@@ -25,6 +25,8 @@ default['elasticsearch']['cluster_name'] = "elasticsearch"
 default['elasticsearch']['member_hosts'] = ["http://elasticsearch.service.consul"]
 default['elasticsearch']['memory_lock'] = false
 default['elasticsearch']['minimum_master_nodes'] = 1
+default['elasticsearch']['node_awareness_value'] = '$HOSTNAME'
+default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
@@ -68,4 +70,171 @@ default['elasticsearch']['jvm_options'] = {
   # Avoid crash when using AVX-512
   # https://github.com/elastic/elasticsearch/issues/31425
   '-XX:UseAVX' => 2
+}
+
+default['elasticsearch']['base_template_es7'] = {
+  "index_patterns": ["*"],
+  "order": 0,
+  "settings": {
+    "index" : {
+      "codec" : "best_compression",
+      "search" : {
+        "slowlog" : {
+          "level" : "info",
+          "threshold" : {
+            "fetch" : {
+              "warn" : "10s",
+              "trace" : "500ms",
+              "debug" : "2s",
+              "info" : "5s"
+            },
+            "query" : {
+              "warn" : "10s",
+              "trace" : "500ms",
+              "debug" : "2s",
+              "info" : "5s"
+            }
+          }
+        }
+      },
+      "number_of_shards": 3,
+      "refresh_interval":"30s",
+      "indexing" : {
+        "slowlog" : {
+          "level" : "info",
+          "threshold" : {
+            "index" : {
+              "warn" : "10s",
+              "trace" : "500ms",
+              "debug" : "2s",
+              "info" : "5s"
+            }
+          },
+          "source" : "1000"
+        }
+      },
+      "translog" : {
+        "durability" : "async"
+      }
+    }
+  },
+  "mappings":{
+    "dynamic_templates":[
+      {
+        "message_field":{
+          "path_match":"@message",
+          "match_mapping_type":"string",
+          "mapping":{
+            "type":"text",
+            "norms":false
+          }
+        }
+      },
+      {
+        "string_fields":{
+          "match":"*",
+          "match_mapping_type":"string",
+          "mapping":{
+            "type":"text",
+            "norms":false,
+            "fields":{
+              "keyword":{
+                "type":"keyword",
+                "ignore_above":256
+              }
+            }
+          }
+        }
+      }
+    ],
+    "properties":{
+      "@timestamp":{
+        "type":"date"
+      }
+    }
+  }
+}
+
+default['elasticsearch']['base_template_es6'] = {
+  "index_patterns": ["*"],
+  "order": 0,
+  "settings": {
+    "index" : {
+      "codec" : "best_compression",
+      "search" : {
+        "slowlog" : {
+          "level" : "info",
+          "threshold" : {
+            "fetch" : {
+              "warn" : "10s",
+              "trace" : "500ms",
+              "debug" : "2s",
+              "info" : "5s"
+            },
+            "query" : {
+              "warn" : "10s",
+              "trace" : "500ms",
+              "debug" : "2s",
+              "info" : "5s"
+            }
+          }
+        }
+      },
+      "number_of_shards": 3,
+      "refresh_interval":"30s",
+      "indexing" : {
+        "slowlog" : {
+          "level" : "info",
+          "threshold" : {
+            "index" : {
+              "warn" : "10s",
+              "trace" : "500ms",
+              "debug" : "2s",
+              "info" : "5s"
+            }
+          },
+          "source" : "1000"
+        }
+      },
+      "translog" : {
+        "durability" : "async"
+      }
+    }
+  },
+  "mappings":{
+    "_doc":{
+      "dynamic_templates":[
+        {
+          "message_field":{
+            "path_match":"@message",
+            "match_mapping_type":"string",
+            "mapping":{
+              "type":"text",
+              "norms":false
+            }
+          }
+        },
+        {
+          "string_fields":{
+            "match":"*",
+            "match_mapping_type":"string",
+            "mapping":{
+              "type":"text","norms":false,
+              "fields":{
+                "keyword":{
+                  "type":"keyword",
+                  "ignore_above":256
+                }
+              }
+            }
+          }
+        }
+      ],
+      "properties":{
+        "@timestamp":{
+          "type":"date"
+        }
+      }
+    }
+  }
 }
