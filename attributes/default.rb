@@ -28,6 +28,15 @@ default['elasticsearch']['minimum_master_nodes'] = 1
 default['elasticsearch']['node_awareness_value'] = '$HOSTNAME'
 default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 
+# for ES 7.x
+default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
+default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
+default['elasticsearch']['xpack_security_enabled'] = true
+default['elasticsearch']['xpack_security_transport_ssl_enabled'] = true
+default['elasticsearch']['xpack_security_transport_ssl_verification_mode'] = 'certificate'
+default['elasticsearch']['xpack_security_transport_ssl_keystore_path'] = 'elastic-certificates.p12'
+default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elastic-certificates.p12'
+
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
 default['elasticsearch']['index_number_of_replicas'] = 3
@@ -98,6 +107,7 @@ default['elasticsearch']['base_template_es7'] = {
         }
       },
       "number_of_shards": 3,
+      "number_of_replicas": 1,
       "refresh_interval":"30s",
       "indexing" : {
         "slowlog" : {
@@ -181,6 +191,7 @@ default['elasticsearch']['base_template_es6'] = {
         }
       },
       "number_of_shards": 3,
+      "number_of_replicas": 1,
       "refresh_interval":"30s",
       "indexing" : {
         "slowlog" : {
