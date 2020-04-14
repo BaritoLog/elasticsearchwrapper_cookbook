@@ -50,13 +50,10 @@ config = {
   'thread_pool.write.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
   'discovery.zen.minimum_master_nodes' => minimum_master_nodes,
-<<<<<<< HEAD
   'cluster.routing.allocation.disk.watermark.low' => routing_allocation_disk_watermark_low_threshold,
   'cluster.routing.allocation.disk.watermark.high' => routing_allocation_disk_watermark_high_threshold,
   'cluster.routing.allocation.disk.watermark.flood_stage' => routing_allocation_disk_watermark_flood_stage_threshold,
-=======
   "node.attr.#{node_awareness_attribute}" => node_awareness_value,
->>>>>>> add node attribute to config
 }
 
 if node_master
