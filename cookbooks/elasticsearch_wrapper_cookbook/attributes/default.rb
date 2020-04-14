@@ -84,7 +84,7 @@ default['elasticsearch']['jvm_options'] = {
 
 default['elasticsearch']['base_template_es7'] = {
   "index_patterns": ["*"],
-  "order": 0,
+  "order": -1,
   "settings": {
     "index" : {
       "codec" : "best_compression",
@@ -168,7 +168,7 @@ default['elasticsearch']['base_template_es7'] = {
 
 default['elasticsearch']['base_template_es6'] = {
   "index_patterns": ["*"],
-  "order": 0,
+  "order": -1,
   "settings": {
     "index" : {
       "codec" : "best_compression",

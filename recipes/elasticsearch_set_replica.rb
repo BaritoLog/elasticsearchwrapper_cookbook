@@ -16,7 +16,7 @@ http_request 'Create default template' do
   url "http://#{node.ipaddress}:#{port}/_template/default"
   action :put
   headers "Content-Type" => "application/json"
-  message "{ \"index_patterns\": [\"*\"], \"order\": -1, \"settings\": { \"number_of_replicas\": \"#{number_of_replicas}\" }}"
+  message "{ \"index_patterns\": [\"*\"], \"order\": 0, \"settings\": { \"number_of_replicas\": \"#{number_of_replicas}\" }}"
   retry_delay 30
   retries 10
 end
