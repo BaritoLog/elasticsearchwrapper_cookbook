@@ -85,7 +85,9 @@ default['elasticsearch']['jvm_options'] = {
   '-XX:UseAVX' => 2
 }
 
-default['elasticsearch']['base_template_es7'] = {
+default['elasticsearch']['ca'] = ''
+
+default['elasticsearch']['base_template_es7'] = '{
   "index_patterns": ["*"],
   "order": -1,
   "settings": {
@@ -167,9 +169,9 @@ default['elasticsearch']['base_template_es7'] = {
       }
     }
   }
-}
+}'
 
-default['elasticsearch']['base_template_es6'] = {
+default['elasticsearch']['base_template_es6'] = '{
   "index_patterns": ["*"],
   "order": -1,
   "settings": {
@@ -252,4 +254,4 @@ default['elasticsearch']['base_template_es6'] = {
       }
     }
   }
-}
+}'
