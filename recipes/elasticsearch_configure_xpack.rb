@@ -1,8 +1,9 @@
 version = node['elasticsearch']['version']
 ca = node['elasticsearch']['ca']
 key_name = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
+xpack_enabled = node['elasticssearch']['xpack_security_enabled']
 
-if version >= '7.0.0' && version < '8.0.0'
+if xpack_enabled && version >= '7.0.0' && version < '8.0.0'
   file '/usr/share/elasticsearch/ca.p12' do
     action :delete
   end

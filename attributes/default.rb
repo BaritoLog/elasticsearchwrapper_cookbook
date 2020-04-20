@@ -34,7 +34,7 @@ default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 # for ES 7.x
 default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
 default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
-default['elasticsearch']['xpack_security_enabled'] = true
+default['elasticsearch']['xpack_security_enabled'] = false
 default['elasticsearch']['xpack_security_transport_ssl_enabled'] = true
 default['elasticsearch']['xpack_security_transport_ssl_verification_mode'] = 'certificate'
 default['elasticsearch']['xpack_security_transport_ssl_keystore_path'] = 'elastic-certificates.p12'
@@ -93,42 +93,9 @@ default['elasticsearch']['base_template_es7'] = '{
   "settings": {
     "index" : {
       "codec" : "best_compression",
-      "search" : {
-        "slowlog" : {
-          "level" : "info",
-          "threshold" : {
-            "fetch" : {
-              "warn" : "10s",
-              "trace" : "500ms",
-              "debug" : "2s",
-              "info" : "5s"
-            },
-            "query" : {
-              "warn" : "10s",
-              "trace" : "500ms",
-              "debug" : "2s",
-              "info" : "5s"
-            }
-          }
-        }
-      },
       "number_of_shards": 3,
       "number_of_replicas": 1,
       "refresh_interval":"30s",
-      "indexing" : {
-        "slowlog" : {
-          "level" : "info",
-          "threshold" : {
-            "index" : {
-              "warn" : "10s",
-              "trace" : "500ms",
-              "debug" : "2s",
-              "info" : "5s"
-            }
-          },
-          "source" : "1000"
-        }
-      },
       "translog" : {
         "durability" : "async"
       }
@@ -177,42 +144,9 @@ default['elasticsearch']['base_template_es6'] = '{
   "settings": {
     "index" : {
       "codec" : "best_compression",
-      "search" : {
-        "slowlog" : {
-          "level" : "info",
-          "threshold" : {
-            "fetch" : {
-              "warn" : "10s",
-              "trace" : "500ms",
-              "debug" : "2s",
-              "info" : "5s"
-            },
-            "query" : {
-              "warn" : "10s",
-              "trace" : "500ms",
-              "debug" : "2s",
-              "info" : "5s"
-            }
-          }
-        }
-      },
       "number_of_shards": 3,
       "number_of_replicas": 1,
       "refresh_interval":"30s",
-      "indexing" : {
-        "slowlog" : {
-          "level" : "info",
-          "threshold" : {
-            "index" : {
-              "warn" : "10s",
-              "trace" : "500ms",
-              "debug" : "2s",
-              "info" : "5s"
-            }
-          },
-          "source" : "1000"
-        }
-      },
       "translog" : {
         "durability" : "async"
       }

@@ -85,11 +85,13 @@ end
 if version >= '7.0.0' && version < '8.0.0'
   config['discovery.seed_hosts'] = discovery_seed_hosts
   config['cluster.initial_master_nodes'] = initial_master_nodes
-  config['xpack.security.enabled'] = xpack_security_enabled
-  config['xpack.security.transport.ssl.enabled'] = xpack_security_transport_ssl_enabled
-  config['xpack.security.transport.ssl.verification_mode'] = xpack_security_transport_ssl_verification_mode
-  config['xpack.security.transport.ssl.keystore.path'] = xpack_security_transport_ssl_keystore_path
-  config['xpack.security.transport.ssl.truststore.path'] = xpack_security_transport_ssl_truststore_path
+  if xpack_security_enabled
+    config['xpack.security.enabled'] = xpack_security_enabled
+    config['xpack.security.transport.ssl.enabled'] = xpack_security_transport_ssl_enabled
+    config['xpack.security.transport.ssl.verification_mode'] = xpack_security_transport_ssl_verification_mode
+    config['xpack.security.transport.ssl.keystore.path'] = xpack_security_transport_ssl_keystore_path
+    config['xpack.security.transport.ssl.truststore.path'] = xpack_security_transport_ssl_truststore_path
+  end
 else
   config['discovery.zen.ping.unicast.hosts'] = member_hosts
 end
