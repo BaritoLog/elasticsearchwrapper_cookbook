@@ -1,23 +1,36 @@
+version = node['elasticsearch']['version']
 ca = node['elasticsearch']['ca']
 key_name = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
 
-if version >= '7.0.0' && version < '8.0.0' do
+if version >= '7.0.0' && version < '8.0.0'
+  file '/usr/share/elasticsearch/ca.p12' do
+    action :delete
+  end
+
+  file '/usr/share/elasticsearch/elastic-certificates.p12' do
+    action :delete
+  end
+
+  file '/tmp/ca.b64' do
+    content "#{ca}"
+    action :create
+  end
+
+  apt_package 'expect' do
+    action :install
+  end
+  
   bash 'Setup certificate' do
     user 'root'
-    cwd ::File.dirname('/usr/share/elasticsearch')
     code <<-EOF
-      rm -f ca.p12
-      bash64 -d #{ca} >> ca.p12
-      /usr/bin/expect -c 'bin/elasticsearch-certutil cert --ca ca.p12
-      expect "Enter password for CA (ca.p12) : "
-      send ""      
-      expect "Please enter the desired output file [elastic-certificates.p12]: "
-      send #{key_name}
-      expect "Enter password for #{key_name} : "
-      send ""
+      base64 -di '/tmp/ca.b64' >> /usr/share/elasticsearch/ca.p12
+      /usr/bin/expect -c 'spawn /usr/share/elasticsearch/bin/elasticsearch-certutil cert --ca /usr/share/elasticsearch/ca.p12 --out /usr/share/elasticsearch/elastic-certificates.p12 --pass "" -s
+      match_max 100000
+      expect -exact "Enter password for CA (/usr/share/elasticsearch/ca.p12) : "
+      send -- "\r"
       expect eof'
-      mv #{keyname} /etc/elasticsearch/#{keyname}
-      chown elasticsearch:elasticsearch /etc/elasticsearch/#{keyname}
+      mv /usr/share/elasticsearch/elastic-certificates.p12 /etc/elasticsearch/#{key_name}
+      chown elasticsearch:elasticsearch /etc/elasticsearch/#{key_name}
     EOF
   end
 end

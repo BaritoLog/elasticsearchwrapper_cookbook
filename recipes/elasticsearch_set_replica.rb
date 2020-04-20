@@ -8,12 +8,12 @@
 
 number_of_replicas = node['elasticsearch']['index_number_of_replicas']
 port = node['elasticsearch']['port']
-
+ipaddress = node['ipaddress']
 # Since ES >= 5, index configuration cannot using yaml file, using dynamic config API instead
 
 # Create default template which will used by future indices with default number_of_replicas
 http_request 'Create default template' do
-  url "http://#{node.ipaddress}:#{port}/_template/default"
+  url "http://#{ipaddress}:#{port}/_template/default"
   action :put
   headers "Content-Type" => "application/json"
   message "{ \"index_patterns\": [\"*\"], \"order\": 0, \"settings\": { \"number_of_replicas\": \"#{number_of_replicas}\" }}"
@@ -23,7 +23,7 @@ end
 
 # Update old index, might be error because new node have empty index, ignored
 http_request 'Change number_of_replicas in existing index' do
-  url "http://#{node.ipaddress}:#{port}/_settings"
+  url "http://#{ipaddress}:#{port}/_settings"
   action :put
   headers "Content-Type" => "application/json"
   message "{ \"number_of_replicas\" : \"#{number_of_replicas}\" }"

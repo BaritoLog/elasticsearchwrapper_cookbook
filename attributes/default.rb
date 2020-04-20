@@ -28,7 +28,7 @@ default['elasticsearch']['minimum_master_nodes'] = 1
 default['elasticsearch']['routing_allocation_disk_watermark_low_threshold'] = "100gb"
 default['elasticsearch']['routing_allocation_disk_watermark_high_threshold'] = "50gb"
 default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold'] = "10gb"
-default['elasticsearch']['node_awareness_value'] = '$HOSTNAME'
+default['elasticsearch']['node_awareness_value'] = "$HOSTNAME"
 default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 
 # for ES 7.x
@@ -43,7 +43,7 @@ default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elas
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
-default['elasticsearch']['index_number_of_replicas'] = 3
+default['elasticsearch']['index_number_of_replicas'] = 1
 
 # Java package to install by platform
 default['elasticsearch']['java'] = {

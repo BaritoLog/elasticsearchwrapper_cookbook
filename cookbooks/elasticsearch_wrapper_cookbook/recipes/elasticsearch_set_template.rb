@@ -18,8 +18,11 @@ end
 
 port = node['elasticsearch']['port']
 
+# Since ES >= 5, index configuration cannot using yaml file, using dynamic config API instead
+
+# Create default template which will used by future indices with default number_of_replicas
 http_request 'Create base template' do
-  url "http://#{ipaddress}:#{port}/_template/base_template"
+  url "http://#{ipaddress}:#{port}/_template/base_default"
   action :put
   headers "Content-Type" => "application/json"
   message "#{base_template}"

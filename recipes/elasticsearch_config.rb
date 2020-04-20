@@ -7,7 +7,9 @@
 #
 
 Chef::Recipe.send(:include, HostProperties)
-hostname = node.hostname
+hostname = node['hostname']
+version = node['elasticsearch']['version']
+ipaddress = node['ipaddress']
 port = node['elasticsearch']['port']
 bulk_queue_size = node['elasticsearch']['bulk_queue_size']
 auto_create_index = node['elasticsearch']['auto_create_index']
@@ -25,12 +27,22 @@ routing_allocation_disk_watermark_low_threshold = node['elasticsearch']['routing
 routing_allocation_disk_watermark_high_threshold = node['elasticsearch']['routing_allocation_disk_watermark_high_threshold']
 routing_allocation_disk_watermark_flood_stage_threshold = node['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold']
 node_awareness_value = node['elasticsearch']['node_awareness_value']
-node_awareness_attribute = node['elasticsearch']['node_awareness_attributes']
+node_awareness_attribute = node['elasticsearch']['node_awareness_attribute']
 
 directory data_dir do
   owner user
   group user
   action :create
+end
+
+if version >= '7.0.0' && version < '8.0.0'
+  initial_master_nodes = node['elasticsearch']['initial_master_nodes']
+  discovery_seed_hosts = node['elasticsearch']['discovery_seed_hosts']
+  xpack_security_enabled = node['elasticsearch']['xpack_security_enabled']
+  xpack_security_transport_ssl_enabled = node['elasticsearch']['xpack_security_transport_ssl_enabled']
+  xpack_security_transport_ssl_verification_mode = node['elasticsearch']['xpack_security_transport_ssl_verification_mode']
+  xpack_security_transport_ssl_keystore_path = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
+  xpack_security_transport_ssl_truststore_path = node['elasticsearch']['xpack_security_transport_ssl_truststore_path']
 end
 
 if node['elasticsearch']['allocated_memory']
@@ -59,16 +71,27 @@ config = {
 if node_master
   config['cluster.name'] = cluster_name
   config['node.master'] = node_master
-  config['discovery.zen.ping.unicast.hosts'] = member_hosts
   config['network.host'] = node.ipaddress
   config['cluster.routing.allocation.awareness.attributes'] = node_awareness_attribute
 elsif node_data
   config['cluster.name'] = cluster_name
   config['node.data'] = node_data
-  config['network.host'] = node.ipaddress
+  config['network.host'] = ipaddress
   config['node.master'] = node_master
 else
   config['network.host'] = hostname
+end
+
+if version >= '7.0.0' && version < '8.0.0'
+  config['discovery.seed_hosts'] = discovery_seed_hosts
+  config['cluster.initial_master_nodes'] = initial_master_nodes
+  config['xpack.security.enabled'] = xpack_security_enabled
+  config['xpack.security.transport.ssl.enabled'] = xpack_security_transport_ssl_enabled
+  config['xpack.security.transport.ssl.verification_mode'] = xpack_security_transport_ssl_verification_mode
+  config['xpack.security.transport.ssl.keystore.path'] = xpack_security_transport_ssl_keystore_path
+  config['xpack.security.transport.ssl.truststore.path'] = xpack_security_transport_ssl_truststore_path
+else
+  config['discovery.zen.ping.unicast.hosts'] = member_hosts
 end
 
 elasticsearch_configure 'elasticsearch' do
