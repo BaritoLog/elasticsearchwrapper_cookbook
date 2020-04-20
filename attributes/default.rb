@@ -43,7 +43,9 @@ default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elas
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
+default['elasticsearch']['index_number_of_shards'] = 3
 default['elasticsearch']['index_number_of_replicas'] = 1
+default['elasticsearch']['index_refresh_intervals'] = "30s"
 
 # Java package to install by platform
 default['elasticsearch']['java'] = {
@@ -93,9 +95,6 @@ default['elasticsearch']['base_template_es7'] = '{
   "settings": {
     "index" : {
       "codec" : "best_compression",
-      "number_of_shards": 3,
-      "number_of_replicas": 1,
-      "refresh_interval":"30s",
       "translog" : {
         "durability" : "async"
       }
@@ -144,9 +143,6 @@ default['elasticsearch']['base_template_es6'] = '{
   "settings": {
     "index" : {
       "codec" : "best_compression",
-      "number_of_shards": 3,
-      "number_of_replicas": 1,
-      "refresh_interval":"30s",
       "translog" : {
         "durability" : "async"
       }
