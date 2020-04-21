@@ -8,7 +8,7 @@
 
 number_of_shards = node['elasticsearch']['index_number_of_shards']
 number_of_replicas = node['elasticsearch']['index_number_of_replicas']
-refresh_interval = node['elasticsearch']['index_refresh_intervals']
+refresh_interval = node['elasticsearch']['index_refresh_interval']
 port = node['elasticsearch']['port']
 ipaddress = node['ipaddress']
 # Since ES >= 5, index configuration cannot using yaml file, using dynamic config API instead
@@ -28,7 +28,7 @@ http_request 'Change number_of_replicas in existing index' do
   url "http://#{ipaddress}:#{port}/_settings"
   action :put
   headers "Content-Type" => "application/json"
-  message "{ \"number_of_shards\": \"#{number_of_shards}\", \"number_of_replicas\": \"#{number_of_replicas}\", \"refresh_interval\": \"#{refresh_intervals}\" }"
+  message "{\"index\": {\"refresh_interval\": \"#{refresh_intervals}\" }}"
   retry_delay 30
   ignore_failure true
 end
