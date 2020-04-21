@@ -28,7 +28,7 @@ http_request 'Change number_of_replicas in existing index' do
   url "http://#{ipaddress}:#{port}/_settings"
   action :put
   headers "Content-Type" => "application/json"
-  message "{\"index\": {\"refresh_interval\": \"#{refresh_intervals}\" }}"
+  message "{\"index\": {\"refresh_interval\": \"#{refresh_interval}\" }}"
   retry_delay 30
   ignore_failure true
 end
