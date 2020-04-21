@@ -32,6 +32,7 @@ default['elasticsearch']['node_awareness_value'] = "$HOSTNAME"
 default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 
 # for ES 7.x
+default['elasticsearch']['bootstrap_password'] = 'change_me'
 default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
 default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
 default['elasticsearch']['xpack_security_enabled'] = false

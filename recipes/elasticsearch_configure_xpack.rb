@@ -2,6 +2,7 @@ version = node['elasticsearch']['version']
 ca = node['elasticsearch']['ca']
 key_name = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
 xpack_enabled = node['elasticsearch']['xpack_security_enabled']
+bootstrap_password = node['elasticsearch']['bootstrap_password']
 
 if xpack_enabled && version >= '7.0.0' && version < '8.0.0'
   file '/usr/share/elasticsearch/ca.p12' do
@@ -32,6 +33,14 @@ if xpack_enabled && version >= '7.0.0' && version < '8.0.0'
       expect eof'
       mv /usr/share/elasticsearch/elastic-certificates.p12 /etc/elasticsearch/#{key_name}
       chown elasticsearch:elasticsearch /etc/elasticsearch/#{key_name}
+    EOF
+  end
+
+  bash 'Setup initial password' do
+    user 'root'
+    code <<-EOF
+      echo "#{bootstrap_password}" | /usr/share/elasticsearch/bin/elasticsearch-keystore add -x "bootstrap.password"
+      chown elasticsearch:elasticsearch /etc/elasticsearch/elasticsearch.keystore
     EOF
   end
 end
