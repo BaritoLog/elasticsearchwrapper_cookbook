@@ -45,7 +45,7 @@ default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elas
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
 default['elasticsearch']['index_number_of_shards'] = 3
 default['elasticsearch']['index_number_of_replicas'] = 1
-default['elasticsearch']['index_refresh_intervals'] = "30s"
+default['elasticsearch']['index_refresh_interval'] = "30s"
 
 # Java package to install by platform
 default['elasticsearch']['java'] = {
