@@ -90,99 +90,99 @@ default['elasticsearch']['jvm_options'] = {
 
 default['elasticsearch']['ca'] = ''
 
-default['elasticsearch']['base_template_es7'] = '{
-  "index_patterns": ["*"],
-  "order": -1,
-  "settings": {
-    "index" : {
-      "codec" : "best_compression",
-      "translog" : {
-        "durability" : "async"
+default['elasticsearch']['base_template_es7'] = {
+  :index_patterns => ["*"],
+  :order => -1,
+  :settings => {
+    :index=>{
+      :codec => "best_compression",
+      :translog => {
+        :durability => "async"
       }
     }
   },
-  "mappings":{
-    "dynamic_templates":[
+  :mappings =>{
+    :dynamic_templates =>[
       {
-        "message_field":{
-          "path_match":"@message",
-          "match_mapping_type":"string",
-          "mapping":{
-            "type":"text",
-            "norms":false
+        :message_field =>{
+          :path_match =>"@message",
+          :match_mapping_type =>"string",
+          :mapping =>{
+            :type =>"text",
+            :norms =>false
           }
         }
       },
       {
-        "string_fields":{
-          "match":"*",
-          "match_mapping_type":"string",
-          "mapping":{
-            "type":"text",
-            "norms":false,
-            "fields":{
-              "keyword":{
-                "type":"keyword",
-                "ignore_above":256
+        :string_fields =>{
+          :match =>"*",
+          :match_mapping_type =>"string",
+          :mapping =>{
+            :type =>"text",
+            :norms =>false,
+            :fields =>{
+              :keyword =>{
+                :type =>"keyword",
+                :ignore_above =>256
               }
             }
           }
         }
       }
     ],
-    "properties":{
-      "@timestamp":{
-        "type":"date"
+    :properties =>{
+      :@timestamp=>{
+        :type =>"date"
       }
     }
   }
-}'
+}
 
-default['elasticsearch']['base_template_es6'] = '{
-  "index_patterns": ["*"],
-  "order": -1,
-  "settings": {
-    "index" : {
-      "codec" : "best_compression",
-      "translog" : {
-        "durability" : "async"
+default['elasticsearch']['base_template_es6'] = {
+  :index_patterns => ["*"],
+  :order => -1,
+  :settings => {
+    :index => {
+      :codec => "best_compression",
+      :translog => {
+        :durability=> "async"
       }
     }
   },
-  "mappings":{
-    "_doc":{
-      "dynamic_templates":[
+  :mappings =>{
+    :_doc =>{
+      :dynamic_templates =>[
         {
-          "message_field":{
-            "path_match":"@message",
-            "match_mapping_type":"string",
-            "mapping":{
-              "type":"text",
-              "norms":false
+          :message_field =>{
+            :path_match =>"@message",
+            :match_mapping_type =>"string",
+            :mapping =>{
+              :type =>"text",
+              :norms =>false
             }
           }
         },
         {
-          "string_fields":{
-            "match":"*",
-            "match_mapping_type":"string",
-            "mapping":{
-              "type":"text","norms":false,
-              "fields":{
-                "keyword":{
-                  "type":"keyword",
-                  "ignore_above":256
+          :string_fields =>{
+            :match =>"*",
+            :match_mapping_type =>"string",
+            :mapping =>{
+              :type =>"text",:norms =>false,
+              :fields =>{
+                :keyword =>{
+                  :type =>"keyword",
+                  :ignore_above =>256
                 }
               }
             }
           }
         }
       ],
-      "properties":{
-        "@timestamp":{
-          "type":"date"
+      :properties =>{
+        :@timestamp=>{
+          :type =>"date"
         }
       }
     }
   }
-}'
+}

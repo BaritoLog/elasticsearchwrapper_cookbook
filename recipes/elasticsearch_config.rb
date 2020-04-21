@@ -71,7 +71,7 @@ config = {
 if node_master
   config['cluster.name'] = cluster_name
   config['node.master'] = node_master
-  config['network.host'] = node.ipaddress
+  config['network.host'] = ipaddress
   config['cluster.routing.allocation.awareness.attributes'] = node_awareness_attribute
 elsif node_data
   config['cluster.name'] = cluster_name

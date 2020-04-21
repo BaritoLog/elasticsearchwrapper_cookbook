@@ -26,7 +26,7 @@ http_request 'Create base template' do
   headers({'AUTHORIZATION' => "Basic #{basic_auth}",
     'Content-Type' => 'application/json'
   })
-  message "#{base_template}"
+  message base_template.to_json
   ignore_failure true
   retry_delay 30
   retries 10
