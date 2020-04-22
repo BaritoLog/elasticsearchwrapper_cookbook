@@ -7,6 +7,7 @@
 #
 version = node['elasticsearch']['version']
 ipaddress = node['ipaddress']
+xpack_enabled = node['elasticsearch']['xpack_security_enabled']
 bootstrap_password = node['elasticsearch']['bootstrap_password']
 basic_auth = Base64.encode64("elastic:#{bootstrap_password}")
 
@@ -20,14 +21,26 @@ end
 
 port = node['elasticsearch']['port']
 
-http_request 'Create base template' do
-  url "http://#{ipaddress}:#{port}/_template/base_template"
-  action :put
-  headers({'AUTHORIZATION' => "Basic #{basic_auth}",
-    'Content-Type' => 'application/json'
-  })
-  message base_template.to_json
-  ignore_failure true
-  retry_delay 30
-  retries 10
+if xpack_enabled
+  http_request 'Create base template' do
+    url "http://#{ipaddress}:#{port}/_template/base_template"
+    action :put
+    headers({'AUTHORIZATION' => "Basic #{basic_auth}",
+      'Content-Type' => 'application/json'
+    })
+    message base_template.to_json
+    ignore_failure true
+    retry_delay 30
+    retries 10
+  end
+else
+  http_request 'Create base template' do
+    url "http://#{ipaddress}:#{port}/_template/base_template"
+    action :put
+    headers 'Content-Type' => 'application/json'
+    message base_template.to_json
+    ignore_failure true
+    retry_delay 30
+    retries 10
+  end
 end
