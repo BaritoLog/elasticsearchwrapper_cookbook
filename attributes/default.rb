@@ -90,6 +90,10 @@ default['elasticsearch']['jvm_options'] = {
 
 default['elasticsearch']['ca'] = ''
 
+default['elasticsearch']['base_template'] = {
+  :index_patterns => ["*"]
+}
+
 default['elasticsearch']['base_template_es7'] = {
   :order => -1,
   :index_patterns => ["*"],
