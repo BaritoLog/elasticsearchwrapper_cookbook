@@ -91,8 +91,8 @@ default['elasticsearch']['jvm_options'] = {
 default['elasticsearch']['ca'] = ''
 
 default['elasticsearch']['base_template_es7'] = {
-  :index_patterns => ["*"],
   :order => -1,
+  :index_patterns => ["*"],
   :settings => {
     :index=>{
       :codec => "best_compression",
@@ -139,8 +139,8 @@ default['elasticsearch']['base_template_es7'] = {
 }
 
 default['elasticsearch']['base_template_es6'] = {
-  :index_patterns => ["*"],
   :order => -1,
+  :index_patterns => ["*"],
   :settings => {
     :index => {
       :codec => "best_compression",
