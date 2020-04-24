@@ -41,7 +41,6 @@ default['elasticsearch']['xpack_security_transport_ssl_verification_mode'] = 'ce
 default['elasticsearch']['xpack_security_transport_ssl_keystore_path'] = 'elastic-certificates.p12'
 default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elastic-certificates.p12'
 
-
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
 default['elasticsearch']['index_number_of_shards'] = 3
