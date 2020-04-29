@@ -80,6 +80,7 @@ default['elasticsearch']['jvm_options'] = {
   '-Dlog4j2.disable.jmx' => true,
   '-Dlog4j.skipJansi' => true,
   '-XX:+HeapDumpOnOutOfMemoryError' => '',
+  '-XX:+CrashOnOutOfMemoryError' => '',
   '-Djava.io.tmpdir' => '/tmp',
 
   # Avoid crash when using AVX-512
