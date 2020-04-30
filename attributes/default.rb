@@ -31,15 +31,9 @@ default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshol
 default['elasticsearch']['node_awareness_value'] = "$HOSTNAME"
 default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 
-# for ES 7.x
-default['elasticsearch']['bootstrap_password'] = 'change_me'
+# ES 7.x
 default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
 default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
-default['elasticsearch']['xpack_security_enabled'] = false
-default['elasticsearch']['xpack_security_transport_ssl_enabled'] = true
-default['elasticsearch']['xpack_security_transport_ssl_verification_mode'] = 'certificate'
-default['elasticsearch']['xpack_security_transport_ssl_keystore_path'] = 'elastic-certificates.p12'
-default['elasticsearch']['xpack_security_transport_ssl_truststore_path'] = 'elastic-certificates.p12'
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
@@ -88,7 +82,16 @@ default['elasticsearch']['jvm_options'] = {
   '-XX:UseAVX' => 2
 }
 
-default['elasticsearch']['ca'] = ''
+# Elasticsearch xpack enabled true variables
+default['elasticsearch']['security'] = {
+  'ca' => "",
+  'bootstrap_password' => 'change_me',
+  'xpack_security_enabled' => false,
+  'xpack_security_transport_ssl_enabled' => true,
+  'xpack_security_transport_ssl_verification_mode' => 'certificate',
+  'xpack_security_transport_ssl_keystore_path' => 'elastic-certificates.p12',
+  'xpack_security_transport_ssl_truststore_path' => 'elastic-certificates.p12'
+}
 
 default['elasticsearch']['base_template'] = {
   :index_patterns => ["*"]

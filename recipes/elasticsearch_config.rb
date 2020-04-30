@@ -38,11 +38,11 @@ end
 if version >= '7.0.0' && version < '8.0.0'
   initial_master_nodes = node['elasticsearch']['initial_master_nodes']
   discovery_seed_hosts = node['elasticsearch']['discovery_seed_hosts']
-  xpack_security_enabled = node['elasticsearch']['xpack_security_enabled']
-  xpack_security_transport_ssl_enabled = node['elasticsearch']['xpack_security_transport_ssl_enabled']
-  xpack_security_transport_ssl_verification_mode = node['elasticsearch']['xpack_security_transport_ssl_verification_mode']
-  xpack_security_transport_ssl_keystore_path = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
-  xpack_security_transport_ssl_truststore_path = node['elasticsearch']['xpack_security_transport_ssl_truststore_path']
+  xpack_security_enabled = node['elasticsearch']['security']['xpack_security_enabled']
+  xpack_security_transport_ssl_enabled = node['elasticsearch']['security']['xpack_security_transport_ssl_enabled']
+  xpack_security_transport_ssl_verification_mode = node['elasticsearch']['security']['xpack_security_transport_ssl_verification_mode']
+  xpack_security_transport_ssl_keystore_path = node['elasticsearch']['security']['xpack_security_transport_ssl_keystore_path']
+  xpack_security_transport_ssl_truststore_path = node['elasticsearch']['security']['xpack_security_transport_ssl_truststore_path']
 end
 
 if node['elasticsearch']['allocated_memory']

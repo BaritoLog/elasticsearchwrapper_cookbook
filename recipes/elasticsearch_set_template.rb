@@ -8,8 +8,8 @@
 require 'json'
 version = node['elasticsearch']['version']
 ipaddress = node['ipaddress']
-xpack_enabled = node['elasticsearch']['xpack_security_enabled']
-bootstrap_password = node['elasticsearch']['bootstrap_password']
+xpack_enabled = node['elasticsearch']['security']['xpack_security_enabled']
+bootstrap_password = node['elasticsearch']['security']['bootstrap_password']
 basic_auth = Base64.encode64("elastic:#{bootstrap_password}")
 
 if version >= '6.0.0' && version < '7.0.0'

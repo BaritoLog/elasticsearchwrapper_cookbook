@@ -1,8 +1,8 @@
 version = node['elasticsearch']['version']
-ca = node['elasticsearch']['ca']
-key_name = node['elasticsearch']['xpack_security_transport_ssl_keystore_path']
-xpack_enabled = node['elasticsearch']['xpack_security_enabled']
-bootstrap_password = node['elasticsearch']['bootstrap_password']
+ca = node['elasticsearch']['security']['ca']
+key_name = node['elasticsearch']['security']['xpack_security_transport_ssl_keystore_path']
+xpack_enabled = node['elasticsearch']['security']['xpack_security_enabled']
+bootstrap_password = node['elasticsearch']['security']['bootstrap_password']
 
 if xpack_enabled && version >= '7.0.0' && version < '8.0.0'
   file '/usr/share/elasticsearch/ca.p12' do
