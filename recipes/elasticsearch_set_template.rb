@@ -10,9 +10,12 @@ version = node['elasticsearch']['version']
 ipaddress = node['ipaddress']
 xpack_enabled = node['elasticsearch']['security']['xpack_security_enabled']
 bootstrap_password = node['elasticsearch']['security']['bootstrap_password']
+override_base_template = node['elasticsearch']['override_base_template']
 basic_auth = Base64.encode64("elastic:#{bootstrap_password}")
 
-if version >= '6.0.0' && version < '7.0.0'
+if override_base_template
+  base_template = node['elasticsearch']['base_template']
+elsif version >= '6.0.0' && version < '7.0.0'
   base_template = node['elasticsearch']['base_template_es6']
 elsif version >= '7.0.0' && version < '8.0.0'
   base_template = node['elasticsearch']['base_template_es7']

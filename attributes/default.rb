@@ -93,6 +93,7 @@ default['elasticsearch']['security'] = {
   'xpack_security_transport_ssl_truststore_path' => 'elastic-certificates.p12'
 }
 
+default['elasticsearch']['override_base_template'] = false
 default['elasticsearch']['base_template'] = {
   :index_patterns => ["*"]
 }
