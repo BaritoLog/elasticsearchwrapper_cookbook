@@ -9,7 +9,7 @@ require 'json'
 version = node['elasticsearch']['version']
 ipaddress = node['ipaddress']
 xpack_enabled = node['elasticsearch']['security']['xpack_security_enabled']
-bootstrap_password = node['elasticsearch']['security']['bootstrap_password']
+bootstrap_password = Base64.decode(node['elasticsearch']['security']['bootstrap_password'])
 override_base_template = node['elasticsearch']['override_base_template']
 basic_auth = Base64.encode64("elastic:#{bootstrap_password}")
 
