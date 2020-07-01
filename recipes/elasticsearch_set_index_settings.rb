@@ -12,7 +12,7 @@ xpack_enabled = node['elasticsearch']['security']['xpack_security_enabled']
 number_of_shards = node['elasticsearch']['index_number_of_shards']
 number_of_replicas = node['elasticsearch']['index_number_of_replicas']
 refresh_interval = node['elasticsearch']['index_refresh_interval']
-bootstrap_password = Base64.decode(node['elasticsearch']['security']['bootstrap_password'])
+bootstrap_password = Base64.decode64(node['elasticsearch']['security']['bootstrap_password'])
 basic_auth = Base64.encode64("elastic:#{bootstrap_password}")
 # Since ES >= 5, index configuration cannot using yaml file, using dynamic config API instead
 

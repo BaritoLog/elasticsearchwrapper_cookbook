@@ -84,7 +84,8 @@ default['elasticsearch']['jvm_options'] = {
 
 # Elasticsearch xpack enabled true variables
 default['elasticsearch']['security'] = {
-  'ca' => "",
+  'ca' => '',
+  'bootstrap_password' => '',
   'xpack_security_enabled' => false,
   'xpack_security_transport_ssl_enabled' => true,
   'xpack_security_transport_ssl_verification_mode' => 'certificate',
