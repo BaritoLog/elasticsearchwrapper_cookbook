@@ -1,8 +1,9 @@
-include_recipe 'homebrew'
-include_recipe 'homebrew::cask'
-include_recipe 'java::notify'
+Chef::Log.fatal("
 
-homebrew_tap 'caskroom/versions'
-homebrew_cask "java#{node['java']['jdk_version']}" do
-  notifies :write, 'log[jdk-version-changed]', :immediately
-end
+The java::homebrew recipe is now deprecated
+Use the homebrew cookbook and resources in your wrapper cookbook
+See the documentation folder for a list of resources
+
+")
+
+raise 'Recipe used instead of custom resource'

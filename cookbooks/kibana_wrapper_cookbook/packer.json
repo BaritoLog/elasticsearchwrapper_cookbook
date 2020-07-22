@@ -26,7 +26,15 @@
       "run_list": [
         "recipe[kibana_wrapper_cookbook::default]",
         "recipe[prometheus::kibana_exporter]"
-      ]
+      ],
+      "json": {
+        "kibana": {
+          "version": "6.4.3"
+        },
+        "kibana_exporter": {
+          "kibana_version": "6.4.3"
+        }
+      }
     }
   ]
 }

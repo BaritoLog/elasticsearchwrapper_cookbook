@@ -1,6 +1,6 @@
 #
 # Cookbook:: java
-# Provider:: jce
+# Resource:: jce
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-property :jdk_version, String, default: lazy { node['java']['jdk_version'].to_s }
-property :jce_url, String, default: lazy { node['java']['oracle']['jce'][jdk_version]['url'] }
-property :jce_checksum, String, default: lazy { node['java']['oracle']['jce'][jdk_version]['checksum'] }
-property :java_home, String, default: lazy { node['java']['java_home'] }
-property :jce_home, String, default: lazy { node['java']['oracle']['jce']['home'] }
-property :jce_cookie, String, default: lazy { node['java']['oracle']['accept_oracle_download_terms'] ? 'oraclelicense=accept-securebackup-cookie' : '' }
-property :principal, String, default: lazy { platform_family?('windows') ? node['java']['windows']['owner'] : 'administrator' }
+property :jdk_version, String, default: lazy { node['java']['jdk_version'].to_s }, description: 'The Java version to install into'
+property :jce_url, String, default: lazy { node['java']['oracle']['jce'][jdk_version]['url'] }, description: 'The URL for the JCE distribution'
+property :jce_checksum, String, default: lazy { node['java']['oracle']['jce'][jdk_version]['checksum'] }, description: 'The checksum of the JCE distribution'
+property :java_home, String, default: lazy { node['java']['java_home'] }, description: 'The location of the Java installation'
+property :jce_home, String, default: lazy { node['java']['oracle']['jce']['home'] }, description: 'The location where JCE files will be decompressed for installation'
+property :jce_cookie, String, default: lazy { node['java']['oracle']['accept_oracle_download_terms'] ? 'oraclelicense=accept-securebackup-cookie' : '' }, description: 'Indicates that you accept Oracles EULA'
+property :principal, String, default: lazy { platform_family?('windows') ? node['java']['windows']['owner'] : 'administrator' }, description: 'For Windows installations only, this determines the owner of the JCE files'
 
 action :install do
   jdk_version = new_resource.jdk_version
@@ -48,7 +48,7 @@ action :install do
   # JRE installation does not have a jre folder
   jre_path = node['java']['install_type'] == 'jdk' ? 'jre' : ''
 
-  if node['os'] == 'windows'
+  if platform_family?('windows')
 
     staging_path = ::File.join(jce_home, jdk_version)
     staging_local_policy = ::File.join(staging_path, "UnlimitedJCEPolicyJDK#{jdk_version}", 'local_policy.jar')
@@ -57,10 +57,10 @@ action :install do
     final_local_policy = ::File.join(jre_final_path, 'local_policy.jar')
     final_export_policy = ::File.join(jre_final_path, 'US_export_policy.jar')
 
-    windows_zipfile staging_path do
-      source r.path
-      checksum jce_checksum
-      action :unzip
+    archive_file staging_path do
+      path r.path
+      destination staging_path
+      action :extract
       not_if { ::File.exist? staging_local_policy }
     end
 
