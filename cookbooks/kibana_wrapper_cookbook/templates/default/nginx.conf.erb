@@ -16,9 +16,7 @@ server {
     proxy_read_timeout 100ms;
   }
 
-  location = /tps-banner {
-    internal;
-
+  location = <%= @base_path %>/_barito.js {
     content_by_lua_block {
       local cjson = require "cjson"
 
@@ -36,52 +34,47 @@ server {
           if string.len(app_names_message) > 0 then
             app_names_message = string.sub(app_names_message, 0, -3)
             ngx.say([[
-              <script>
-                let style = document.createElement("style");
-                document.head.appendChild(style);
-                style.sheet.insertRule(".global-nav { top: 42px !important }", 0);
-                style.sheet.insertRule(".app-wrapper { top: 42px !important }", 0);
+              let style = document.createElement("style");
+              document.head.appendChild(style);
+              style.sheet.insertRule(".global-nav, .app-wrapper, .chrHeaderWrapper, .euiNavDrawer { margin-top: 42px !important }", 0);
 
-                let banner = document.createElement("div");
-                banner.innerHTML = "]] .. string.format("<%= @message_format %>", app_names_message) .. [[";
-                banner.style.backgroundColor = "red";
-                banner.style.color = "white";
-                banner.style.fontFamily = "Arial, Helvetica, sans-serif";
-                banner.style.fontSize = "22px";
-                banner.style.lineHeight = "1";
-                banner.style.overflowX = "scroll";
-                banner.style.padding = "10px";
-                banner.style.position = "fixed";
-                banner.style.textAlign = "center";
-                banner.style.top = "0";
-                banner.style.whiteSpace = "nowrap";
-                banner.style.width = "100%";
-                banner.style.zIndex = "1000";
+              let banner = document.createElement("div");
+              banner.innerHTML = "]] .. string.format("<%= @message_format %>", app_names_message) .. [[";
+              banner.style.backgroundColor = "red";
+              banner.style.color = "white";
+              banner.style.fontFamily = "Arial, Helvetica, sans-serif";
+              banner.style.fontSize = "22px";
+              banner.style.lineHeight = "1";
+              banner.style.overflowX = "scroll";
+              banner.style.padding = "10px";
+              banner.style.position = "fixed";
+              banner.style.textAlign = "center";
+              banner.style.top = "0";
+              banner.style.whiteSpace = "nowrap";
+              banner.style.width = "100%";
+              banner.style.zIndex = "1000";
 
-                document.body.appendChild(banner);
-                let observer = new MutationObserver(function(mutations) {
-                  for (let mutation of mutations) {
-                    for (let removedNode of mutation.removedNodes) {
-                      if (removedNode == banner) {
-                        document.body.appendChild(banner);
-                      }
+              document.body.appendChild(banner);
+              let observer = new MutationObserver(function(mutations) {
+                for (let mutation of mutations) {
+                  for (let removedNode of mutation.removedNodes) {
+                    if (removedNode == banner) {
+                      document.body.appendChild(banner);
                     }
                   }
-                });
-                observer.observe(document.body, { childList: true })
-              </script>
+                }
+              });
+              observer.observe(document.body, { childList: true });
             ]]);
           end
         end
       end
-      ngx.say("</html>")
     }
   }
 
   location ~ ^<%= @base_path %>/?(.*)$ {
-    sub_filter '</html>' '';
+    sub_filter '</body>' '<script src="<%= @base_path %>/_barito.js"></script></body>';
     sub_filter_once on;
-    add_after_body /tps-banner;
 
     rewrite ^<%= @base_path %>/?(.*)$ /$1 break;
     root /opt/kibana/current;

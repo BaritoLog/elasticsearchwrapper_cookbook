@@ -69,3 +69,8 @@ end
 service 'nginx' do
   supports start: true, enable: true, restart: true
 end
+
+service 'kibana' do
+  supports start: true, restart: true, stop: true, status: true
+  action [:enable, :restart]
+end
