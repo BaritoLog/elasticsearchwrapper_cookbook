@@ -34,8 +34,8 @@ if xpack_enabled
     })
     message(base_template.to_json)
     ignore_failure true
-    retry_delay 30
     retries 10
+    retry_delay 30
   end
 else
   http_request 'Create base template' do
@@ -44,7 +44,7 @@ else
     headers 'Content-Type' => 'application/json'
     message(base_template.to_json)
     ignore_failure true
-    retry_delay 30
     retries 10
+    retry_delay 30
   end
 end
