@@ -81,7 +81,7 @@ if version >= '7.0.0' && version < '8.0.0'
   config['thread_pool.write.size'] = bulk_size_conf
   config['thread_pool.write.queue_size'] = bulk_queue_size
   
-  if discovery_type == 'nil'
+  if discovery_type == 'multiple-node'
     config['discovery.seed_hosts'] = discovery_seed_hosts
     config['cluster.initial_master_nodes'] = initial_master_nodes
   else
