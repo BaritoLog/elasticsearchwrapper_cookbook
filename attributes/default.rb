@@ -32,7 +32,7 @@ default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshol
 # ES 7.x
 default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
 default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
-default['elasticsearch']['discvery_type'] = 'multiple-node'
+default['elasticsearch']['discovery_type'] = 'multiple-node'
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe
