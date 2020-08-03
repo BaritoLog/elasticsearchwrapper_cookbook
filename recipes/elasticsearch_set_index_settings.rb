@@ -1,6 +1,6 @@
 #
 # Cookbook:: elasticsearchwrapper
-# Recipe:: elasticsearch_set_replica
+# Recipe:: elasticsearch_set_index_settings
 #
 # Copyright:: 2018, BaritoLog.
 #
