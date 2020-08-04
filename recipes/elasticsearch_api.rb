@@ -1,6 +1,6 @@
 #
 # Cookbook:: elasticsearchwrapper
-# Recipe:: elasticsearch
+# Recipe:: elasticsearch_api
 #
 # Copyright:: 2018, BaritoLog.
 #
