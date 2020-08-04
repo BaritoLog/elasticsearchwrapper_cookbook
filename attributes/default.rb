@@ -10,7 +10,7 @@
 default['elasticsearch']['user'] = 'elasticsearch'
 
 # Elasticsearch configuration
-default['elasticsearch']['version'] = '7.5.0'
+default['elasticsearch']['version'] = '7.5.2'
 default['elasticsearch']['port'] = 9200
 default['elasticsearch']['auto_create_index'] = true
 default['elasticsearch']['data_directory'] = '/var/lib/elasticsearch'
