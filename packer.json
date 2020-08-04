@@ -31,10 +31,7 @@
       "json": {
         "elasticsearch": {
           "version": "7.5.2",
-          "discovery_type": "single-node",
-          "security": {
-            "xpack_security_enabled": "false"
-          }
+          "discovery_type": "single-node"
         }
       }
     }
