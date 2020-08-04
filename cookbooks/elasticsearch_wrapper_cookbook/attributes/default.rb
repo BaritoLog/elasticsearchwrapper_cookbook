@@ -10,7 +10,7 @@
 default['elasticsearch']['user'] = 'elasticsearch'
 
 # Elasticsearch configuration
-default['elasticsearch']['version'] = '6.3.0'
+default['elasticsearch']['version'] = '7.5.2'
 default['elasticsearch']['port'] = 9200
 default['elasticsearch']['auto_create_index'] = true
 default['elasticsearch']['data_directory'] = '/var/lib/elasticsearch'
@@ -28,12 +28,11 @@ default['elasticsearch']['minimum_master_nodes'] = 1
 default['elasticsearch']['routing_allocation_disk_watermark_low_threshold'] = "100gb"
 default['elasticsearch']['routing_allocation_disk_watermark_high_threshold'] = "50gb"
 default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold'] = "10gb"
-default['elasticsearch']['node_awareness_value'] = "$HOSTNAME"
-default['elasticsearch']['node_awareness_attribute'] = 'hostname'
 
 # ES 7.x
 default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
 default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
+default['elasticsearch']['discovery_type'] = 'multiple-node'
 
 # Explicitly set number of replicas, override this as necessary
 # Also you need to explicitly include `elasticsearch_set_replica` recipe

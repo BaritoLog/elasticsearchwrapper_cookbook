@@ -1,3 +1,11 @@
+#
+# Cookbook:: elasticsearchwrapper
+# Recipe:: elasticsearch_configure_xpack
+#
+# Copyright:: 2018, BaritoLog.
+#
+#
+
 version = node['elasticsearch']['version']
 ca = node['elasticsearch']['security']['ca']
 key_name = node['elasticsearch']['security']['xpack_security_transport_ssl_keystore_path']

@@ -26,8 +26,6 @@ minimum_master_nodes = node['elasticsearch']['minimum_master_nodes']
 routing_allocation_disk_watermark_low_threshold = node['elasticsearch']['routing_allocation_disk_watermark_low_threshold']
 routing_allocation_disk_watermark_high_threshold = node['elasticsearch']['routing_allocation_disk_watermark_high_threshold']
 routing_allocation_disk_watermark_flood_stage_threshold = node['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold']
-node_awareness_value = node['elasticsearch']['node_awareness_value']
-node_awareness_attribute = node['elasticsearch']['node_awareness_attribute']
 
 directory data_dir do
   owner user
@@ -38,6 +36,7 @@ end
 if version >= '7.0.0' && version < '8.0.0'
   initial_master_nodes = node['elasticsearch']['initial_master_nodes']
   discovery_seed_hosts = node['elasticsearch']['discovery_seed_hosts']
+  discovery_type = node['elasticsearch']['discovery_type']
   xpack_security_enabled = node['elasticsearch']['security']['xpack_security_enabled']
   xpack_security_transport_ssl_enabled = node['elasticsearch']['security']['xpack_security_transport_ssl_enabled']
   xpack_security_transport_ssl_verification_mode = node['elasticsearch']['security']['xpack_security_transport_ssl_verification_mode']
@@ -58,21 +57,17 @@ config = {
   'http.port' => port,
   'network.host' => hostname,
   'bootstrap.memory_lock' => memory_lock,
-  'thread_pool.write.size' => bulk_size_conf,
-  'thread_pool.write.queue_size' => bulk_queue_size,
   'action.auto_create_index' => auto_create_index,
   'discovery.zen.minimum_master_nodes' => minimum_master_nodes,
   'cluster.routing.allocation.disk.watermark.low' => routing_allocation_disk_watermark_low_threshold,
   'cluster.routing.allocation.disk.watermark.high' => routing_allocation_disk_watermark_high_threshold,
-  'cluster.routing.allocation.disk.watermark.flood_stage' => routing_allocation_disk_watermark_flood_stage_threshold,
-  "node.attr.#{node_awareness_attribute}" => node_awareness_value,
+  'cluster.routing.allocation.disk.watermark.flood_stage' => routing_allocation_disk_watermark_flood_stage_threshold
 }
 
 if node_master
   config['cluster.name'] = cluster_name
   config['node.master'] = node_master
   config['network.host'] = ipaddress
-  config['cluster.routing.allocation.awareness.attributes'] = node_awareness_attribute
 elsif node_data
   config['cluster.name'] = cluster_name
   config['node.data'] = node_data
@@ -83,8 +78,16 @@ else
 end
 
 if version >= '7.0.0' && version < '8.0.0'
-  config['discovery.seed_hosts'] = discovery_seed_hosts
-  config['cluster.initial_master_nodes'] = initial_master_nodes
+  config['thread_pool.write.size'] = bulk_size_conf
+  config['thread_pool.write.queue_size'] = bulk_queue_size
+  
+  if discovery_type == 'multiple-node'
+    config['discovery.seed_hosts'] = discovery_seed_hosts
+    config['cluster.initial_master_nodes'] = initial_master_nodes
+  else
+    config['discovery.type'] = discovery_type
+  end
+
   if xpack_security_enabled
     config['xpack.security.enabled'] = xpack_security_enabled
     config['xpack.security.transport.ssl.enabled'] = xpack_security_transport_ssl_enabled
@@ -93,6 +96,8 @@ if version >= '7.0.0' && version < '8.0.0'
     config['xpack.security.transport.ssl.truststore.path'] = xpack_security_transport_ssl_truststore_path
   end
 else
+  config['thread_pool.bulk.size'] = bulk_size_conf
+  config['thread_pool.bulk.queue_size'] = bulk_queue_size
   config['discovery.zen.ping.unicast.hosts'] = member_hosts
 end
 
