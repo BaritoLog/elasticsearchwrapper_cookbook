@@ -1,6 +1,6 @@
 #
 # Cookbook:: elasticsearchwrapper
-# Recipe:: elasticsearch_set_replica
+# Recipe:: elasticsearch_set_index_settings
 #
 # Copyright:: 2018, BaritoLog.
 #
@@ -17,7 +17,7 @@ basic_auth = Base64.encode64("elastic:#{bootstrap_password}")
 # Since ES >= 5, index configuration cannot using yaml file, using dynamic config API instead
 
 if xpack_enabled
-  http_request 'Create default template' do
+  http_request 'Create index default settings' do
     url "http://#{ipaddress}:#{port}/_template/index_settings"
     action :put
     headers({'AUTHORIZATION' => "Basic #{basic_auth}",
@@ -26,6 +26,7 @@ if xpack_enabled
     message "{ \"index_patterns\": [\"*\"], \"order\": 0, \"settings\": { \"number_of_shards\": \"#{number_of_shards}\", \"number_of_replicas\": \"#{number_of_replicas}\", \"refresh_interval\": \"#{refresh_interval}\" }}"
     retry_delay 30
     retries 10
+    ignore_failure true
   end
 
   # Update old index, might be error because new node have empty index, ignored
@@ -37,16 +38,18 @@ if xpack_enabled
     })
     message "{\"index\": {\"refresh_interval\": \"#{refresh_interval}\" }}"
     retry_delay 30
+    retries 10
     ignore_failure true
   end
 else
-  http_request 'Create default template' do
+  http_request 'Create index default settings' do
     url "http://#{ipaddress}:#{port}/_template/index_settings"
     action :put
     headers 'Content-Type' => 'application/json'
     message "{ \"index_patterns\": [\"*\"], \"order\": 0, \"settings\": { \"number_of_shards\": \"#{number_of_shards}\", \"number_of_replicas\": \"#{number_of_replicas}\", \"refresh_interval\": \"#{refresh_interval}\" }}"
     retry_delay 30
     retries 10
+    ignore_failure true
   end
 
   # Update old index, might be error because new node have empty index, ignored
