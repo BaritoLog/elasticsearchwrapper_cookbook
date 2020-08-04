@@ -1,0 +1,62 @@
+---
+driver:
+  name: vagrant
+  product_version: 14.1.1
+  customize:
+    memory: 6144
+    cpus: 2
+
+provisioner:
+  name: chef_zero
+  nodes_path: 'test/fixtures/nodes'
+  environments_path: 'test/fixtures/data_bags'
+  data_bags_path: 'test/fixtures/data_bags'
+  client_rb:
+    environment: _default
+    chef_license: accept
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: opscode-ubuntu-18.04-chef-14
+    driver:
+      box: bento/ubuntu-18.04
+    provisioner:
+      product_name: chef
+      product_version: latest
+
+suites:
+  - name: member
+    driver:
+      vm_hostname: member.elasticsearch.test
+      network:
+      - ["private_network", {ip: "192.168.20.12"}]
+      customize:
+        memory: 4048
+        cpus: 2
+    run_list:
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch]
+      - recipe[elasticsearch_wrapper_cookbook::elasticsearch_api]
+      - recipe[kibana_wrapper_cookbook::default]
+    verifier:
+      inspec_tests:
+        - test/unit/spec
+    attributes:
+      elasticsearch:
+        hosts: ['member-opscode-ubuntu-1804-chef-14']
+        package_retries: 1
+        allocated_memory: 3048000
+        node_master: true
+        node_data: true
+        minimum_master_nodes: 2
+        routing_allocation_disk_watermark_low_threshold: "1gb"
+        routing_allocation_disk_watermark_high_threshold: "500mb"
+        routing_allocation_disk_watermark_flood_stage_threshold: "100mb"
+        member_hosts: ["192.168.20.12"]
+        discovery_type: 'single-node'
+        security:
+          ca: "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"
+          xpack_security_enabled: false
+          bootstrap_password: "Q0hBTkdFX01F"
+        version: "7.5.0"
