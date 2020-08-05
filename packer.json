@@ -25,14 +25,11 @@
       "cookbook_paths": ["{{user `cookbook_paths`}}"],
       "run_list": [
         "recipe[elasticsearch_wrapper_cookbook::elasticsearch]",
-        "recipe[elasticsearch_wrapper_cookbook::elasticsearch_api]",
         "recipe[prometheus::elasticsearch_exporter]"
       ],
       "json": {
         "elasticsearch": {
-          "version": "7.5.2",
-          "node_master": true,
-          "discovery_type": "single-node"
+          "version": "7.5.2"
         }
       }
     }
