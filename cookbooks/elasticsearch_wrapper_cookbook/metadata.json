@@ -19,7 +19,7 @@
   "recipes": {
 
   },
-  "version": "7.5.2",
+  "version": "7.5.3",
   "source_url": "https://github.com/BaritoLog/elasticsearch_wrapper_cookbook",
   "issues_url": "https://github.com/BaritoLog/elasticsearch_wrapper_cookbook/issues",
   "privacy": false,
