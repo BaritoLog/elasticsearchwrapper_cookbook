@@ -35,6 +35,14 @@ elasticsearch_install 'elasticsearch' do
   action :install
 end
 
+if version <= "7.0.0"
+  dpkg_package "#{Chef::Config[:file_cache_path]}/elasticsearch-#{version}.deb" do
+    version version
+    options "--force-confold"
+    not_if "dpkg -l elasticsearch | grep -q #{version}"
+  end
+end
+
 execute 'apt autoremove' do
   command 'apt autoremove -y'
 end
