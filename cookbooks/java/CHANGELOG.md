@@ -2,7 +2,115 @@
 
 This file is used to list changes made in each version of the Java cookbook.
 
-## Unreleased
+## 8.4.0 (2020-09-09)
+
+- Add `starttls` property to `java_certificate` resource to allow fetching certificates from non HTTPS endpoints
+
+## 8.3.2 (2020-08-20)
+
+- Add aarch64 installation candidate for Corretto
+
+## 8.3.1 (2020-08-06)
+
+- Extract correct JAVA_HOME from custom URLs
+
+## 8.3.0 (2020-06-18)
+
+- Restore compatibility with Chef Infra Client < 16
+- Update Fedora releases in the Kitchen configs
+
+## 8.2.1 (2020-06-02)
+
+- resolved cookstyle error: resources/adoptopenjdk_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/adoptopenjdk_linux_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/adoptopenjdk_macos_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/corretto_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/openjdk_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/openjdk_pkg_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+- resolved cookstyle error: resources/openjdk_source_install.rb:1:1 warning: `ChefDeprecations/ResourceUsesOnlyResourceName`
+
+## 8.2.0 (2020-05-22)
+
+- Fixed java_certificate resource :remove bugs preventing removal
+
+## 8.1.2 (2020-04-20)
+
+- Add OpenJDK source install resource
+- Add documentation for openjdk_source_install
+- Default the openjdk_install resource to install using the package manager by default
+
+## 8.1.1 (2020-04-19)
+
+- Fix JAVA_HOME for `adoptopenjdk_linux_install` resource
+
+## 8.1.0 (2020-04-19)
+
+- Added `openjdk_pkg_install` resource
+- Added documentation for openjdk_pkg_install
+- Added `adoptopenjdk_linux_install` resource
+- Added `adoptopenjdk_macos_install` resource
+- Added documentation for `adoptopenjdk_linux_install`
+- Added documentation for `adoptopenjdk_macos_install`
+- Resolved cookstyle error: resources/alternatives.rb:49:13 refactor: `ChefCorrectness/ChefApplicationFatal`
+- Resolved cookstyle error: resources/alternatives.rb:62:13 refactor: `ChefCorrectness/ChefApplicationFatal`
+- Resolved cookstyle error: resources/alternatives.rb:75:11 refactor: `ChefCorrectness/ChefApplicationFatal`
+- Resolved cookstyle error: resources/jce.rb:51:6 refactor: `ChefStyle/UnnecessaryOSCheck`
+
+## 8.0.1 (2020-03-30)
+
+- Added documentation in documentation/resources for `adoptopenjdk_install`, `alternatives`, `certificate`, `corretto_install`, `jce`, `openjdk_install`
+
+## 8.0.0 (2020-03-30)
+
+- Added `openjdk_install` resource & documentation
+- Removed openjdk, corretto, default_java_symlink, ibm & ibm_tar, notify & oracle recipes
+- Removed support for IBM and Oracle Java
+- Temporarily removed support for Windows
+- Split out helpers for each provider into their own namespace and file
+
+## 7.0.0 (2020-03-05)
+
+- Refactored and sped up unit tests.
+
+## Added
+
+- Added `adoptopenjdk_install` resource & documentation
+- Added AdoptOpenJDK 13 testing
+
+## Deprecated
+
+- Removed the adoptopenjdk recipe, please use the `adoptopenjdk_install` resource instead.
+- Increased the minimum Chef requirement to Chef 15 to use the archive resource.
+- Removed AdoptOpenJDK 10 testing
+
+## 6.0.0 (2020-03-02)
+
+## Deprecated
+
+- The resource alias `java_ark` has been deprecated in favour of `java_oracle_install`
+
+## 5.0.0 (2020-02-21)
+
+### Added
+
+### Changed
+
+- Fixed java_certificate regex where it checks if cert exists in cacert file.
+- Make Homebrew Cask name an attribute to allow for other options (ex: adoptopenjdk)
+- Switch homebrew tap to homebrew/cask-versions
+- Make builds parallel
+- Updates package name and link changes for adoptopenjdk
+- Migrated testing to github actions
+
+### Deprecated
+
+### Removed
+
+- Removes openjdk-6
+- Removes openjdk-7 for Ubuntu 16.04
+- Removes openjdk-11 for Ubuntu
+- Removes openjdk-direct for Debian 8
+- Removes oracle variants from test configurations
 
 ## 4.3.0 (2019-08-04)
 
@@ -565,8 +673,8 @@ This version brings a wealth of tests and (backwards-compatible) refactoring, pl
 
 ## v1.5.4
 
-- [COOK-885] - update alternatives called on wrong file
-- [COOK-1607] - use shellout instead of execute resource to update alternatives
+- [COOK-885] update alternatives called on wrong file
+- [COOK-1607] use shellout instead of execute resource to update alternatives
 
 ## v1.5.2
 

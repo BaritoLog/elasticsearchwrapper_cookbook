@@ -2,6 +2,29 @@
 
 This file is used to list changes made in each version of the windows cookbook.
 
+## 7.0.2 (2020-09-10)
+
+- Resolve a typo in the user_privilege resource - [@tas50](https://github.com/tas50)
+- Don't run delivery in Appveyor - [@tas50](https://github.com/tas50)
+
+## 7.0.1 (2020-09-10)
+
+- Remove testing of Windows 2008 R2 - [@tas50](https://github.com/tas50)
+- Cookstyle 6.2.9 Fixes - [@xorimabot](https://github.com/xorimabot)
+- Avoid deprcation warnings when using user_privilege resource on Chef >= - [@tas50](https://github.com/tas50)
+
+## Unreleased
+
+- resolved cookstyle error: libraries/registry_helper.rb:69:9 refactor: `ChefCorrectness/ChefApplicationFatal`
+- resolved cookstyle error: libraries/registry_helper.rb:232:9 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/registry_helper.rb:234:9 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/registry_helper.rb:244:9 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/registry_helper.rb:245:7 convention: `Style/EmptyElse`
+- resolved cookstyle error: libraries/registry_helper.rb:246:9 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/registry_helper.rb:272:9 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/registry_helper.rb:274:9 convention: `Style/RedundantReturn`
+- resolved cookstyle error: libraries/windows_helper.rb:165:14 warning: `Lint/SendWithMixinArgument`
+
 ## 7.0.0 (2020-03-26)
 
 ### Breaking Changes
@@ -16,10 +39,6 @@ This file is used to list changes made in each version of the windows cookbook.
 - Remove desired_state: true from resources - [@tas50](https://github.com/tas50)
 - The host_name property in the dns resource doesn't need to be a name property - [@tas50](https://github.com/tas50)
 - Remove unnecessary include of the powershell mixin - [@tas50](https://github.com/tas50)
-
-## Unreleased
-
-- Added windows_schannel to configure schannel (tls settings for dotnet apps and powershell)
 
 ## 6.0.1 (2019-10-01)
 

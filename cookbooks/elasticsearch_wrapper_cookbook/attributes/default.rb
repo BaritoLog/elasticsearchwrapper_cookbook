@@ -30,8 +30,8 @@ default['elasticsearch']['routing_allocation_disk_watermark_high_threshold'] = "
 default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold'] = "10gb"
 
 # ES 7.x
-default['elasticsearch']['initial_master_nodes'] = 'elasticsearch.service.consul'
-default['elasticsearch']['discovery_seed_hosts'] = 'elasticsearch.service.consul'
+default['elasticsearch']['initial_master_nodes'] = ['elasticsearch.service.consul']
+default['elasticsearch']['discovery_seed_hosts'] = ['elasticsearch.service.consul']
 default['elasticsearch']['discovery_type'] = 'multiple-node'
 
 # Explicitly set number of replicas, override this as necessary
