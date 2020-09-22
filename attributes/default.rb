@@ -28,6 +28,8 @@ default['elasticsearch']['minimum_master_nodes'] = 1
 default['elasticsearch']['routing_allocation_disk_watermark_low_threshold'] = "100gb"
 default['elasticsearch']['routing_allocation_disk_watermark_high_threshold'] = "50gb"
 default['elasticsearch']['routing_allocation_disk_watermark_flood_stage_threshold'] = "10gb"
+default['elasticsearch']['use_cluster_ip'] = true
+default['elasticsearch']['cluster_ip'] = "http://elasticsearch.service.consul:9200"
 
 # ES 7.x
 default['elasticsearch']['initial_master_nodes'] = ['elasticsearch.service.consul']

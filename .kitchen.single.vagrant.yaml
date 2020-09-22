@@ -45,6 +45,7 @@ suites:
     attributes:
       elasticsearch:
         hosts: ['member-opscode-ubuntu-1804-chef-14']
+        use_cluster_ip: false
         package_retries: 1
         allocated_memory: 3048000
         node_master: true
