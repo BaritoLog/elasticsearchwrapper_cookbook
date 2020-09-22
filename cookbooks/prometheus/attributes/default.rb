@@ -9,8 +9,8 @@ default["prometheus"]["user"] = "prometheus"
 default["prometheus"]["group"] = "prometheus"
 
 # Prometheus version
-default["prometheus"]["version"] = "2.19.2"
-default["prometheus"]["checksum"] = "68382959f73354b30479f9cc3e779cf80fd2e93010331652700dcc71f6b05586"
+default["prometheus"]["version"] = "2.21.0"
+default["prometheus"]["checksum"] = "f1f2eeabbf7822572dce67565dc96ffaa2dd1897dd1d844562552b11123f151a"
 default["prometheus"]["binary_url"] = "https://github.com/prometheus/prometheus/releases/download/v#{node["prometheus"]["version"]}/prometheus-#{node["prometheus"]["version"]}.linux-amd64.tar.gz"
 
 # Prometheus configuration repository
@@ -36,9 +36,9 @@ default["prometheus"]["tls_certs"]["ca_content"] = ""
 default["prometheus"]["tls_certs"]["cert_content"] = ""
 default["prometheus"]["tls_certs"]["key_content"] = ""
 
-default["prometheus"]["config"]["scrape_interval"] = "15s"
-default["prometheus"]["config"]["scrape_timeout"] = "10s"
-default["prometheus"]["config"]["evaluation_interval"] = "15s"
+default["prometheus"]["config"]["scrape_interval"] = "60s"
+default["prometheus"]["config"]["scrape_timeout"] = "30s"
+default["prometheus"]["config"]["evaluation_interval"] = "1m"
 default["prometheus"]["config"]["external_labels"] = {}
 default["prometheus"]["config"]["remote_write"] = []
 default["prometheus"]["config"]["remote_read"] = []
